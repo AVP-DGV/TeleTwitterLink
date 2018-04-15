@@ -10,7 +10,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<TeleTwitte
     {
         IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile(@"E:\Програмиране\Telerik Academy Alpha\Mod4\TeleTwitterLink\TeleTwitterLink\TeleTwitterLink.Web\appsettings.json")
+            .AddJsonFile("appsettings.json")
             .Build();
 
         var builder = new DbContextOptionsBuilder<TeleTwitterLinkDbContext>();
