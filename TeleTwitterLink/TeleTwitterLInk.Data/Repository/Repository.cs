@@ -13,6 +13,12 @@ namespace TeleTwitterLInk.Data.Repository
 
         public Repository(TeleTwitterLinkDbContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException("DbContext cant be null");
+            }
+
+
             this.context = context;
         }
 
@@ -48,6 +54,11 @@ namespace TeleTwitterLInk.Data.Repository
 
         public void Delete(T entity)
         {
+            if (entity == null)
+            {
+                throw new ArgumentNullException("Entity cant be null");
+            }
+
             entity.IsDeleted = true;
             entity.DeletedOn = DateTime.Now;
 
@@ -58,6 +69,7 @@ namespace TeleTwitterLInk.Data.Repository
         public void Update(T entity)
         {
             EntityEntry entry = this.context.Entry(entity);
+
             if (entry.State == EntityState.Detached)
             {
                 this.context.Set<T>().Attach(entity);

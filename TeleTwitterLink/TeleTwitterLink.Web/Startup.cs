@@ -9,6 +9,10 @@ using TeleTwitterLink.Web.Services;
 using TeleTwitterLink.Data.Models;
 using TeleTwitterLInk.Data;
 using TeleTwitterLink.Services.External;
+using TeleTwitterLink.Infrastructure.Providers;
+using TeleTwitterLink.Services.Data;
+using TeleTwitterLInk.Data.Repository;
+using TeleTwitterLInk.Data.Saver;
 
 namespace TeleTwitterLink.Web
 {
@@ -32,8 +36,8 @@ namespace TeleTwitterLink.Web
                 options.UseSqlServer(connectionString);
             });
 
-            //services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-            //services.AddScoped<ISaver, EntitySaver>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<ISaver, EntitySaver>();
         }
 
         private void RegisterAuthentication(IServiceCollection services)
@@ -42,27 +46,29 @@ namespace TeleTwitterLink.Web
                 .AddEntityFrameworkStores<TeleTwitterLinkDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.Configure<IdentityOptions>(options =>
+            if (this.Environment.IsDevelopment())
             {
-                // Password settings
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 3;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequiredUniqueChars = 0;
+                services.Configure<IdentityOptions>(options =>
+                {
+                    // Password settings
+                    options.Password.RequireDigit = false;
+                    options.Password.RequiredLength = 3;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequiredUniqueChars = 0;
 
-                // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(1);
-                options.Lockout.MaxFailedAccessAttempts = 999;
-            });
+                    // Lockout settings
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(1);
+                    options.Lockout.MaxFailedAccessAttempts = 999;
+                });
+            }
         }
 
         private void RegisterServices(IServiceCollection services)
         {
             services.AddTransient<IEmailSender, EmailSender>();
-            //services.AddTransient<IPostsService, PostsService>();
-            //services.AddTransient<ICommentsService, CommentsService>();
+            //services.AddTransient<ITwitterApiCall, TwitterApiCall>();
         }
 
         private void RegisterInfrastructure(IServiceCollection services)
@@ -71,7 +77,7 @@ namespace TeleTwitterLink.Web
 
             //services.AddAutoMapper();
 
-            //services.AddScoped<IMappingProvider, MappingProvider>();
+            services.AddScoped<IMappingProvider, MappingProvider>();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -81,7 +87,14 @@ namespace TeleTwitterLink.Web
             this.RegisterAuthentication(services);
             this.RegisterServices(services);
             this.RegisterInfrastructure(services);
+            //var test = GetTwitterData("https://api.twitter.com/1.1/users/search.json?q=donaldtrump");
         }
+
+        //public static string GetTwitterData(string resourceurl)
+        //{
+        //    TwitterApiCall timelineTweets = new TwitterApiCall(consumerkey, consumersecret, accesstoken, accesssecret);
+        //    return timelineTweets.GetTwitterData(resourceurl.Trim());
+        //}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)

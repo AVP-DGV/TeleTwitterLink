@@ -20,6 +20,8 @@
   <ItemGroup>
     <ProjectReference Include="..\TeleTwitterLink.Data.Models\TeleTwitterLink.Data.Models.csproj" />
     <ProjectReference Include="..\TeleTwitterLInk.Data\TeleTwitterLInk.Data.csproj" />
+    <ProjectReference Include="..\TeleTwitterLink.Infrastructure\TeleTwitterLink.Infrastructure.csproj" />
+    <ProjectReference Include="..\TeleTwitterLink.Services.Data\TeleTwitterLink.Services.Data.csproj" />
     <ProjectReference Include="..\TeleTwitterLink.Services.External\TeleTwitterLink.Services.External.csproj" />
   </ItemGroup>
 
