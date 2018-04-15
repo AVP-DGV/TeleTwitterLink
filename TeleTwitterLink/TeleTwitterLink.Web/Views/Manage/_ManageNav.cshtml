@@ -1,5 +1,7 @@
 ﻿@using TeleTwitterLink.Web.Views.Manage
-@inject SignInManager<ApplicationUser> SignInManager
+@using TeleTwitterLink.Data.Models
+
+@inject SignInManager<User> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
