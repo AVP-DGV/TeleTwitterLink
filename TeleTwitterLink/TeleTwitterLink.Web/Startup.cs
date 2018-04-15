@@ -87,14 +87,7 @@ namespace TeleTwitterLink.Web
             this.RegisterAuthentication(services);
             this.RegisterServices(services);
             this.RegisterInfrastructure(services);
-            //var test = GetTwitterData("https://api.twitter.com/1.1/users/search.json?q=donaldtrump");
         }
-
-        //public static string GetTwitterData(string resourceurl)
-        //{
-        //    TwitterApiCall timelineTweets = new TwitterApiCall(consumerkey, consumersecret, accesstoken, accesssecret);
-        //    return timelineTweets.GetTwitterData(resourceurl.Trim());
-        //}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)

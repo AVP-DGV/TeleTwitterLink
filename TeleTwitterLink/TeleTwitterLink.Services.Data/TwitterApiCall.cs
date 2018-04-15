@@ -144,7 +144,7 @@ namespace TeleTwitterLink.Services.Data
             // var json = JsonConvert.DeserializeObject<UserDto[]>(responseData);
             //var json = JsonConvert.DeserializeObject<StatusDto>(responseData);
             //var json = JsonConvert.DeserializeObject<UserTimelineStatusDto[]>(responseData);
-            var json = JsonConvert.DeserializeObject<TweetDTO>(responseData);
+            //var json = JsonConvert.DeserializeObject<TweetDTO>(responseData);
             return responseData;
         }
 
