@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TeleTwitterLink.Web.Services;
 using TeleTwitterLink.Data.Models;
 using TeleTwitterLInk.Data;
+using TeleTwitterLink.Services.External;
 
 namespace TeleTwitterLink.Web
 {
@@ -22,6 +23,18 @@ namespace TeleTwitterLink.Web
         public IConfiguration Configuration { get; }
 
         public IHostingEnvironment Environment { get; }
+
+        private void RegisterData(IServiceCollection services)
+        {
+            services.AddDbContext<TeleTwitterLinkDbContext>(options =>
+            {
+                var connectionString = Configuration.GetConnectionString("DefaultConnection");
+                options.UseSqlServer(connectionString);
+            });
+
+            //services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            //services.AddScoped<ISaver, EntitySaver>();
+        }
 
         private void RegisterAuthentication(IServiceCollection services)
         {
@@ -45,21 +58,29 @@ namespace TeleTwitterLink.Web
             });
         }
 
+        private void RegisterServices(IServiceCollection services)
+        {
+            services.AddTransient<IEmailSender, EmailSender>();
+            //services.AddTransient<IPostsService, PostsService>();
+            //services.AddTransient<ICommentsService, CommentsService>();
+        }
+
+        private void RegisterInfrastructure(IServiceCollection services)
+        {
+            services.AddMvc();
+
+            //services.AddAutoMapper();
+
+            //services.AddScoped<IMappingProvider, MappingProvider>();
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TeleTwitterLinkDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            //services.AddIdentity<User, IdentityRole>()
-            //    .AddEntityFrameworkStores<TeleTwitterLinkDbContext>()
-            //    .AddDefaultTokenProviders();
-
+            this.RegisterData(services);
             this.RegisterAuthentication(services);
-            // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
-
-            services.AddMvc();
+            this.RegisterServices(services);
+            this.RegisterInfrastructure(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
