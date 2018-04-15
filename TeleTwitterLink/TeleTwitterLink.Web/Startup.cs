@@ -15,7 +15,7 @@ namespace TeleTwitterLink.Web
     {
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
             this.Environment = env;
         }
 
