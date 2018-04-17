@@ -13,6 +13,8 @@ using TeleTwitterLink.Infrastructure.Providers;
 using TeleTwitterLink.Services.Data;
 using TeleTwitterLInk.Data.Repository;
 using TeleTwitterLInk.Data.Saver;
+using TeleTwitterLink.Services.External.Contracts;
+using TeleTwitterLink.Services.Data.Contracts;
 
 namespace TeleTwitterLink.Web
 {
@@ -67,8 +69,12 @@ namespace TeleTwitterLink.Web
 
         private void RegisterServices(IServiceCollection services)
         {
+            services.Configure<TwitterKeys>(Configuration.GetSection("TwitterSecrets"));
             services.AddTransient<IEmailSender, EmailSender>();
-            //services.AddTransient<ITwitterApiCall, TwitterApiCall>();
+            services.AddTransient<ITwitterApiService, TwitterApiService>();
+            services.AddTransient<ITwitterApiCall, TwitterApiCall>();
+            services.AddTransient<TwitterKeys, TwitterKeys>();
+            services.AddTransient<IJsonDeserializer, JsonDeserializer>();
         }
 
         private void RegisterInfrastructure(IServiceCollection services)

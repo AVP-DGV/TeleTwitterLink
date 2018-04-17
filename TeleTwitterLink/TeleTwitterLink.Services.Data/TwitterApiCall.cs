@@ -7,11 +7,12 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
-using TeleTwitterLink.DTO;
+using TeleTwitterLink.Services.Data.Contracts;
+using Microsoft.Extensions.Options;
 
 namespace TeleTwitterLink.Services.Data
 {
-    public class TwitterApiCall
+    public class TwitterApiCall : ITwitterApiCall
     {
         private string consumerKey;
         private string consumerSecret;
@@ -20,17 +21,26 @@ namespace TeleTwitterLink.Services.Data
         private static string version = "1.0";
         private static string signatureMethod = "HMAC-SHA1";
 
-        public TwitterApiCall(string consumerKey, string consumerSecret, string accessToken, string accessSecret)
+        public TwitterApiCall(IOptions<TwitterKeys> keys)
         {
-            this.consumerKey = consumerKey;
-            this.consumerSecret = consumerSecret;
-            this.accessToken = accessToken;
-            this.accessSecret = accessSecret;
+            this.consumerKey = keys.Value.ConsumerKey;
+            this.consumerSecret = keys.Value.ConsumerSecret;
+            this.accessToken = keys.Value.AccessToken;
+            this.accessSecret = keys.Value.AccessSecret;
         }
+
+        //public TwitterApiCall(string consumerKey, string consumerSecret, string accessToken, string accessSecret)
+        //{
+        //    this.consumerKey = consumerKey;
+        //    this.consumerSecret = consumerSecret;
+        //    this.accessToken = accessToken;
+        //    this.accessSecret = accessSecret;
+        //}
 
         public string GetTwitterData(string resourceurl)
         {
             List<string> parameterlist;
+
             if (resourceurl.Contains("?"))
             {
                 parameterlist = GetParametersFromUrl(resourceurl);
@@ -51,10 +61,12 @@ namespace TeleTwitterLink.Services.Data
             string querystring = resourceUrl.Substring(resourceUrl.IndexOf('?') + 1);
             List<string> listtoreturn = new List<string>();
             NameValueCollection nv = HttpUtility.ParseQueryString(querystring);
+
             foreach (string parameter in nv)
             {
                 listtoreturn.Add(parameter + "=" + Uri.EscapeDataString(nv[parameter]));
             }
+
             return listtoreturn;
         }
 
@@ -64,6 +76,7 @@ namespace TeleTwitterLink.Services.Data
             TimeSpan timespan = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             string timestamp = Convert.ToInt64(timespan.TotalSeconds).ToString();
             string signature = GetSignature(nonce, timestamp, resourceurl, parameterlist);
+
             var HeaderFormat = "OAuth " +
             "oauth_consumer_key=\"{0}\", " +
             "oauth_nonce=\"{1}\", " +
@@ -72,6 +85,7 @@ namespace TeleTwitterLink.Services.Data
             "oauth_timestamp=\"{4}\", " +
             "oauth_token=\"{5}\", " +
             "oauth_version=\"{6}\"";
+
             string authHeader = string.Format(HeaderFormat,
             Uri.EscapeDataString(consumerKey),
             Uri.EscapeDataString(nonce),
@@ -81,6 +95,7 @@ namespace TeleTwitterLink.Services.Data
             Uri.EscapeDataString(accessToken),
             Uri.EscapeDataString(version)
             );
+
             return authHeader;
         }
 
@@ -89,9 +104,11 @@ namespace TeleTwitterLink.Services.Data
             string baseString = GenerateBaseString(nonce, timestamp, parameterlist);
             baseString = string.Concat("GET&", Uri.EscapeDataString(resourceurl), "&", Uri.EscapeDataString(baseString));
             var signingKey = string.Concat(Uri.EscapeDataString(consumerSecret), "&", Uri.EscapeDataString(accessSecret));
+
             string signature;
-            HMACSHA1 hasher = new HMACSHA1(ASCIIEncoding.ASCII.GetBytes(signingKey));
-            signature = Convert.ToBase64String(hasher.ComputeHash(ASCIIEncoding.ASCII.GetBytes(baseString)));
+            HMACSHA1 hasher = new HMACSHA1(Encoding.ASCII.GetBytes(signingKey));
+            signature = Convert.ToBase64String(hasher.ComputeHash(Encoding.ASCII.GetBytes(baseString)));
+
             return signature;
         }
 
@@ -134,6 +151,7 @@ namespace TeleTwitterLink.Services.Data
             {
                 postBody = "";
             }
+
             resourceurl += "?" + postBody;
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(resourceurl);
@@ -143,24 +161,12 @@ namespace TeleTwitterLink.Services.Data
             WebResponse response = request.GetResponse();
 
             string responseData = new StreamReader(response.GetResponseStream()).ReadToEnd();
-<<<<<<< HEAD
 
             //var json = JsonConvert.DeserializeObject<UserDto[]>(responseData);
             //var json = JsonConvert.DeserializeObject<StatusDto>(responseData);
             //var json = JsonConvert.DeserializeObject<UserTimelineStatusDto[]>(responseData);
-            //var json = JsonConvert.DeserializeObject<TweetDTO>(responseData);
+            //var json = JsonConvert.DeserializeObject<TweetDTO[]>(responseData);
 
-=======
-            //var json = JsonConvert.DeserializeObject<UserDto[]>(responseData);
-            //var json = JsonConvert.DeserializeObject<StatusDto>(responseData);
-            //var json = JsonConvert.DeserializeObject<UserTimelineStatusDto[]>(responseData);
-            var json = JsonConvert.DeserializeObject<TweetDTO[]>(responseData);
-<<<<<<< HEAD
-
-=======
-            
->>>>>>> ba016cb2702b4df63a25289f6ca95729cd285d3e
->>>>>>> ef515ef73085f614b5cfebd17db9c1c6abd29a47
             return responseData;
         }
 

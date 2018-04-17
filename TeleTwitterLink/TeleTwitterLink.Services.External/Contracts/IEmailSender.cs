@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace TeleTwitterLink.Services.External
+namespace TeleTwitterLink.Services.External.Contracts
 {
     public interface IEmailSender
     {

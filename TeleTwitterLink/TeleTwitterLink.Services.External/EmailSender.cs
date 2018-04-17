@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using TeleTwitterLink.Services.External.Contracts;
 
 namespace TeleTwitterLink.Services.External
 {

@@ -1,6 +1,7 @@
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using TeleTwitterLink.Services.External;
+using TeleTwitterLink.Services.External.Contracts;
 
 namespace TeleTwitterLink.Web.Services
 {
