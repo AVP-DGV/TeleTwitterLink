@@ -141,10 +141,11 @@ namespace TeleTwitterLink.Services.Data
             request.ContentType = "application/x-www-form-urlencoded";
             WebResponse response = request.GetResponse();
             string responseData = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            // var json = JsonConvert.DeserializeObject<UserDto[]>(responseData);
+            //var json = JsonConvert.DeserializeObject<UserDto[]>(responseData);
             //var json = JsonConvert.DeserializeObject<StatusDto>(responseData);
             //var json = JsonConvert.DeserializeObject<UserTimelineStatusDto[]>(responseData);
-            //var json = JsonConvert.DeserializeObject<TweetDTO>(responseData);
+            var json = JsonConvert.DeserializeObject<TweetDTO[]>(responseData);
+            
             return responseData;
         }
 
