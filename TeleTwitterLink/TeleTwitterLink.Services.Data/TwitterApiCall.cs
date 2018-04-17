@@ -143,12 +143,20 @@ namespace TeleTwitterLink.Services.Data
             WebResponse response = request.GetResponse();
 
             string responseData = new StreamReader(response.GetResponseStream()).ReadToEnd();
+<<<<<<< HEAD
 
             //var json = JsonConvert.DeserializeObject<UserDto[]>(responseData);
             //var json = JsonConvert.DeserializeObject<StatusDto>(responseData);
             //var json = JsonConvert.DeserializeObject<UserTimelineStatusDto[]>(responseData);
             //var json = JsonConvert.DeserializeObject<TweetDTO>(responseData);
 
+=======
+            //var json = JsonConvert.DeserializeObject<UserDto[]>(responseData);
+            //var json = JsonConvert.DeserializeObject<StatusDto>(responseData);
+            //var json = JsonConvert.DeserializeObject<UserTimelineStatusDto[]>(responseData);
+            var json = JsonConvert.DeserializeObject<TweetDTO[]>(responseData);
+            
+>>>>>>> ba016cb2702b4df63a25289f6ca95729cd285d3e
             return responseData;
         }
 
