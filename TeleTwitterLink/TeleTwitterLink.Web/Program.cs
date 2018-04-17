@@ -8,8 +8,13 @@ namespace TeleTwitterLink.Web
     {
         public static void Main(string[] args)
         {
+<<<<<<< HEAD
             var test = GetTwitterD("https://api.twitter.com/1.1/users/search.json?q=georgidimitrov5");
             System.Console.WriteLine(test);
+=======
+            //var test = GetTwitterD("https://api.twitter.com/1.1/users/search.json?q=georgidimitrov5");
+            //System.Console.WriteLine(test);
+>>>>>>> ef515ef73085f614b5cfebd17db9c1c6abd29a47
 
             BuildWebHost(args).Run();
         }
