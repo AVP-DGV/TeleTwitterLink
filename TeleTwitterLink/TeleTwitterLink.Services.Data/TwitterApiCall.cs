@@ -40,6 +40,7 @@ namespace TeleTwitterLink.Services.Data
             {
                 parameterlist = null;
             }
+
             string authheader = BuildHeader(resourceurl, parameterlist);
             string jsonresponse = TwitterWebRequest(resourceurl, authheader, parameterlist);
             return jsonresponse;
@@ -140,21 +141,26 @@ namespace TeleTwitterLink.Services.Data
             request.Method = "GET";
             request.ContentType = "application/x-www-form-urlencoded";
             WebResponse response = request.GetResponse();
+
             string responseData = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            // var json = JsonConvert.DeserializeObject<UserDto[]>(responseData);
+
+            //var json = JsonConvert.DeserializeObject<UserDto[]>(responseData);
             //var json = JsonConvert.DeserializeObject<StatusDto>(responseData);
             //var json = JsonConvert.DeserializeObject<UserTimelineStatusDto[]>(responseData);
             //var json = JsonConvert.DeserializeObject<TweetDTO>(responseData);
+
             return responseData;
         }
 
         private string GetPostBody(List<string> parameterlist)
         {
             string stringtoreturn = "";
+
             foreach (string item in parameterlist)
             {
                 stringtoreturn += item + "&";
             }
+
             stringtoreturn = stringtoreturn.TrimEnd('&');
             return stringtoreturn;
         }
