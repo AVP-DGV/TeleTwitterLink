@@ -48,3 +48,19 @@
     border: 0;
     background: transparent;
 }
+
+.profile-image {
+    border-radius: 50%;
+}
+
+.name {
+    font-size: 25px;
+}
+
+.additional-info {
+    overflow: hidden;
+}
+
+.more-info {
+    width: 100%;
+}

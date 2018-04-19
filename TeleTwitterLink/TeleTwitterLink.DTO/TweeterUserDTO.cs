@@ -1,7 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TeleTwitterLink.DTO
 {
@@ -18,5 +15,14 @@ namespace TeleTwitterLink.DTO
 
         [JsonProperty("friends_count")]
         public int FriendsCount { get; set; }
+
+        [JsonProperty("location")]
+        public string Location { get; set; }
+
+        [JsonProperty("profile_image_url_https")]
+        public string ImgUrl { get; set; }
+
+        [JsonProperty("description")]
+        public string Description { get; set; }
     }
 }
