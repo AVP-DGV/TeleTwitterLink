@@ -1,10 +1,5 @@
-﻿@model TeleTwitterLink.Web.Models.SearchViewModels.SearchResultsViewModel
+﻿@model SearchResultsViewModel
 
-@{
-    ViewData["Title"] = "Search result";
-}
-
-<br />
 @if (@Model.SearchResults.Count() != 0)
 {
     foreach (var result in Model.SearchResults)
@@ -21,4 +16,8 @@
             </div>
         </div>
     }
+}
+else
+{
+    <h1>No results</h1>
 }

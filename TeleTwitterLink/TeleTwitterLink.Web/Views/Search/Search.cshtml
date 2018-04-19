@@ -1,29 +1,39 @@
-﻿@model TeleTwitterLink.Web.Models.SearchViewModels.SearchViewModel
+﻿@model SearchViewModel
 
 @{
-    ViewData["Title"] = "Searchbar";
+    ViewData["Title"] = "Search";
 }
 
 <h2>Search Twit Users</h2>
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="~/css/SearchBar.css" />
-
-<form asp-controller="Search" asp-action="SearchResult" method="post">
+<form asp-controller="Search" asp-action="SearchResult" method="post" id="search-form">
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
-                <div id="imaginary_container">
-                    <div asp-validation-summary="All" class="text-danger"></div>
-                    <label asp-for="SearchInput">Search input</label>
-                    <input asp-for="SearchInput" class="form-control" />
-                    <span asp-validation-for="SearchInput" class="text-danger"></span>
+                <div>
+                    <div class="input-group stylish-input-group">
+                        <input asp-for="SearchInput" class="form-control" />
+                        <span class="input-group-addon">
+                            <button type="submit">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                    <div>
+                        <span asp-validation-for="SearchInput" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </form>
+
+<div class="row" id="search-results"></div>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+
+    <script src="~/js/search.js"></script>
+}
 
 

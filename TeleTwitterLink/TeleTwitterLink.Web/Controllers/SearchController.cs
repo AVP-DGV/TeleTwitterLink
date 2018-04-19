@@ -19,15 +19,19 @@ namespace TeleTwitterLink.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult SearchResult(SearchViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return Ok("There were validation errors");
+            }
+
             var searched = twitApiService.FindTwitterUserByName(model.SearchInput);
 
             var returnedView = new SearchResultsViewModel() { SearchResults = searched };
 
-            return View(returnedView);
-
-            //return this.View();
+            return PartialView("_SearchResultPartial", returnedView);
         }
     }
 }

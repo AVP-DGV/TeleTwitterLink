@@ -5,7 +5,7 @@ namespace TeleTwitterLink.Web.Models.SearchViewModels
     public class SearchViewModel
     {
         [Required]
-        [MinLength(1)]
+        [MinLength(4)]
         [DataType(DataType.Text)]
         public string SearchInput { get; set; }
     }
