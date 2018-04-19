@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-TeleTwitterLink.Web-563F2AEC-3639-4E18-A05A-F35BCD7ED855</UserSecretsId>
+    <StartupObject>TeleTwitterLink.Web.Program</StartupObject>
   </PropertyGroup>
 
 
