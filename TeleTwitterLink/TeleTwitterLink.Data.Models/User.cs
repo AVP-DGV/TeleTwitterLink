@@ -7,6 +7,8 @@ namespace TeleTwitterLink.Data.Models
 {
     public class User : IdentityUser, IDeletable, IAuditable
     {
+        public override string UserName { get; set; }
+
         public bool IsDeleted { get; set; }
 
         [DataType(DataType.DateTime)]

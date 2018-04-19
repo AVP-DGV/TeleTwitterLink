@@ -11,9 +11,10 @@ using TeleTwitterLInk.Data;
 namespace TeleTwitterLInk.Data.Migrations
 {
     [DbContext(typeof(TeleTwitterLinkDbContext))]
-    partial class TeleTwitterLinkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180419100551_Username1")]
+    partial class Username1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,6 +174,8 @@ namespace TeleTwitterLInk.Data.Migrations
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
+
+                    b.Property<string>("Username");
 
                     b.HasKey("Id");
 
