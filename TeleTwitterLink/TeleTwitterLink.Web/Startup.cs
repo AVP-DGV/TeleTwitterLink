@@ -15,6 +15,7 @@ using TeleTwitterLInk.Data.Repository;
 using TeleTwitterLInk.Data.Saver;
 using TeleTwitterLink.Services.External.Contracts;
 using TeleTwitterLink.Services.Data.Contracts;
+using System.IO;
 
 namespace TeleTwitterLink.Web
 {
@@ -24,6 +25,16 @@ namespace TeleTwitterLink.Web
         {
             this.Configuration = configuration;
             this.Environment = env;
+
+            var builder = new ConfigurationBuilder();
+            builder.AddUserSecrets<Startup>();
+            Configuration = builder.Build();
+
+            // var builder = new ConfigurationBuilder()
+            //.SetBasePath("%APPDATA%\\microsoft\\UserSecrets\\<userSecretsId>")
+            //.AddJsonFile("secrets.json");
+
+            // this.Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -69,11 +80,11 @@ namespace TeleTwitterLink.Web
 
         private void RegisterServices(IServiceCollection services)
         {
-            services.Configure<TwitterKeys>(Configuration.GetSection("TwitterSecrets"));
+            services.Configure<TwitterKeys>(Configuration.GetSection("TwitterKeys"));
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ITwitterApiService, TwitterApiService>();
             services.AddTransient<ITwitterApiCall, TwitterApiCall>();
-            services.AddTransient<TwitterKeys, TwitterKeys>();
+            services.AddTransient<ITwitterKeys, TwitterKeys>();
             services.AddTransient<IJsonDeserializer, JsonDeserializer>();
         }
 

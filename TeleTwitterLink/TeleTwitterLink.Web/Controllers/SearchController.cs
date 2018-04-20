@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TeleTwitterLink.Services.Data.Contracts;
 using TeleTwitterLink.Web.Models.SearchViewModels;
 
@@ -13,6 +14,7 @@ namespace TeleTwitterLink.Web.Controllers
             this.twitApiService = twitApiService;
         }
 
+        [Authorize]
         public IActionResult Search()
         {
             return this.View();

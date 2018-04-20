@@ -14,19 +14,21 @@ namespace TeleTwitterLink.Services.Data
 {
     public class TwitterApiCall : ITwitterApiCall
     {
-        private string consumerKey;
-        private string consumerSecret;
-        private string accessToken;
-        private string accessSecret;
+        //private string consumerKey;
+        //private string consumerSecret;
+        //private string accessToken;
+        //private string accessSecret;
         private static string version = "1.0";
         private static string signatureMethod = "HMAC-SHA1";
+        private ITwitterKeys keys;
 
-        public TwitterApiCall(IOptions<TwitterKeys> keys)
+        public TwitterApiCall(ITwitterKeys keys)
         {
-            this.consumerKey = keys.Value.ConsumerKey;
-            this.consumerSecret = keys.Value.ConsumerSecret;
-            this.accessToken = keys.Value.AccessToken;
-            this.accessSecret = keys.Value.AccessSecret;
+            this.keys = keys;
+            //this.consumerKey = keys.Value.ConsumerKey;
+            //this.consumerSecret = keys.Value.ConsumerSecret;
+            //this.accessToken = keys.Value.AccessToken;
+            //this.accessSecret = keys.Value.AccessSecret;
         }
 
         //public TwitterApiCall(string consumerKey, string consumerSecret, string accessToken, string accessSecret)
@@ -87,12 +89,12 @@ namespace TeleTwitterLink.Services.Data
             "oauth_version=\"{6}\"";
 
             string authHeader = string.Format(HeaderFormat,
-            Uri.EscapeDataString(consumerKey),
+            Uri.EscapeDataString(keys.ConsumerKey),
             Uri.EscapeDataString(nonce),
             Uri.EscapeDataString(signature),
             Uri.EscapeDataString(signatureMethod),
             Uri.EscapeDataString(timestamp),
-            Uri.EscapeDataString(accessToken),
+            Uri.EscapeDataString(keys.AccessToken),
             Uri.EscapeDataString(version)
             );
 
@@ -103,7 +105,7 @@ namespace TeleTwitterLink.Services.Data
         {
             string baseString = GenerateBaseString(nonce, timestamp, parameterlist);
             baseString = string.Concat("GET&", Uri.EscapeDataString(resourceurl), "&", Uri.EscapeDataString(baseString));
-            var signingKey = string.Concat(Uri.EscapeDataString(consumerSecret), "&", Uri.EscapeDataString(accessSecret));
+            var signingKey = string.Concat(Uri.EscapeDataString(keys.ConsumerSecret), "&", Uri.EscapeDataString(keys.AccessSecret));
 
             string signature;
             HMACSHA1 hasher = new HMACSHA1(Encoding.ASCII.GetBytes(signingKey));
@@ -116,11 +118,11 @@ namespace TeleTwitterLink.Services.Data
         {
             string basestring = "";
             List<string> baseformat = new List<string>();
-            baseformat.Add("oauth_consumer_key=" + consumerKey);
+            baseformat.Add("oauth_consumer_key=" + keys.ConsumerKey);
             baseformat.Add("oauth_nonce=" + nonce);
             baseformat.Add("oauth_signature_method=" + signatureMethod);
             baseformat.Add("oauth_timestamp=" + timestamp);
-            baseformat.Add("oauth_token=" + accessToken);
+            baseformat.Add("oauth_token=" + keys.AccessToken);
             baseformat.Add("oauth_version=" + version);
 
             if (parameterlist != null)
