@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
@@ -8,16 +7,11 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using TeleTwitterLink.Services.Data.Contracts;
-using Microsoft.Extensions.Options;
 
 namespace TeleTwitterLink.Services.Data
 {
     public class TwitterApiCall : ITwitterApiCall
     {
-        //private string consumerKey;
-        //private string consumerSecret;
-        //private string accessToken;
-        //private string accessSecret;
         private static string version = "1.0";
         private static string signatureMethod = "HMAC-SHA1";
         private ITwitterKeys keys;
@@ -25,19 +19,7 @@ namespace TeleTwitterLink.Services.Data
         public TwitterApiCall(ITwitterKeys keys)
         {
             this.keys = keys;
-            //this.consumerKey = keys.Value.ConsumerKey;
-            //this.consumerSecret = keys.Value.ConsumerSecret;
-            //this.accessToken = keys.Value.AccessToken;
-            //this.accessSecret = keys.Value.AccessSecret;
         }
-
-        //public TwitterApiCall(string consumerKey, string consumerSecret, string accessToken, string accessSecret)
-        //{
-        //    this.consumerKey = consumerKey;
-        //    this.consumerSecret = consumerSecret;
-        //    this.accessToken = accessToken;
-        //    this.accessSecret = accessSecret;
-        //}
 
         public string GetTwitterData(string resourceurl)
         {
@@ -165,7 +147,7 @@ namespace TeleTwitterLink.Services.Data
             string responseData = new StreamReader(response.GetResponseStream()).ReadToEnd();
 
             //var json = JsonConvert.DeserializeObject<UserDto[]>(responseData);
-            //var json = JsonConvert.DeserializeObject<StatusDto>(responseData);
+            //var json = JsonConvert.DeserializeObject<StatusDto[]>(responseData);
             //var json = JsonConvert.DeserializeObject<UserTimelineStatusDto[]>(responseData);
             //var json = JsonConvert.DeserializeObject<TweetDTO[]>(responseData);
 

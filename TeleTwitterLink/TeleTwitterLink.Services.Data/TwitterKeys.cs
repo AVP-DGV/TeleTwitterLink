@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using TeleTwitterLink.Services.Data.Contracts;
 
 namespace TeleTwitterLink.Services.Data
 {
@@ -15,10 +16,5 @@ namespace TeleTwitterLink.Services.Data
         public string ConsumerSecret => configuration.GetSection("TwitterKeys")["ConsumerSecret"];
         public string AccessToken => configuration.GetSection("TwitterKeys")["AccessToken"];
         public string AccessSecret => configuration.GetSection("TwitterKeys")["AccessSecret"];
-
-        //public string ConsumerKey { get; set; }
-        //public string ConsumerSecret { get; set; }
-        //public string AccessToken { get; set; }
-        //public string AccessSecret { get; set; }
     }
 }

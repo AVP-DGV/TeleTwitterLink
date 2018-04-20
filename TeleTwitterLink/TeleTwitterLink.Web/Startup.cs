@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TeleTwitterLink.Web.Services;
 using TeleTwitterLink.Data.Models;
 using TeleTwitterLInk.Data;
 using TeleTwitterLink.Services.External;
@@ -15,7 +14,6 @@ using TeleTwitterLInk.Data.Repository;
 using TeleTwitterLInk.Data.Saver;
 using TeleTwitterLink.Services.External.Contracts;
 using TeleTwitterLink.Services.Data.Contracts;
-using System.IO;
 
 namespace TeleTwitterLink.Web
 {
@@ -29,12 +27,6 @@ namespace TeleTwitterLink.Web
             var builder = new ConfigurationBuilder();
             builder.AddUserSecrets<Startup>();
             Configuration = builder.Build();
-
-            // var builder = new ConfigurationBuilder()
-            //.SetBasePath("%APPDATA%\\microsoft\\UserSecrets\\<userSecretsId>")
-            //.AddJsonFile("secrets.json");
-
-            // this.Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }

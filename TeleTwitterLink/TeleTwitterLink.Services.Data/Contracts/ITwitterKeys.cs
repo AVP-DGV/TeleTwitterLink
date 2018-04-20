@@ -1,4 +1,4 @@
-﻿namespace TeleTwitterLink.Services.Data
+﻿namespace TeleTwitterLink.Services.Data.Contracts
 {
     public interface ITwitterKeys
     {
