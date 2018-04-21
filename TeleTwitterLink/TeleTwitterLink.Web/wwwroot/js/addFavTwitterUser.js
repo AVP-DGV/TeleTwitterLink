@@ -1,5 +1,6 @@
 ﻿$(function () {
     $('#search-results').on('click', 'ul li button', function (event) {
-        $('.additional-info').css('overflow', 'visible');
+        var id = $('.add-fav-user').attr('id');
+        $('#' + id).text('Added');
     });
 });
