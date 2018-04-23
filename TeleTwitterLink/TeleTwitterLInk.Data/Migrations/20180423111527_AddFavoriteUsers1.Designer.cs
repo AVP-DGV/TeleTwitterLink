@@ -11,8 +11,8 @@ using TeleTwitterLInk.Data;
 namespace TeleTwitterLInk.Data.Migrations
 {
     [DbContext(typeof(TeleTwitterLinkDbContext))]
-    [Migration("20180419100941_Username2")]
-    partial class Username2
+    [Migration("20180423111527_AddFavoriteUsers1")]
+    partial class AddFavoriteUsers1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -129,6 +129,42 @@ namespace TeleTwitterLInk.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("TeleTwitterLink.Data.Models.TweeterUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("CreatedOn");
+
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("FollowersCount");
+
+                    b.Property<int>("FriendsCount");
+
+                    b.Property<string>("ImgUrl");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Location");
+
+                    b.Property<DateTime?>("ModifiedOn");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("TweeterUserId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TweetUsers");
+                });
+
             modelBuilder.Entity("TeleTwitterLink.Data.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -155,6 +191,8 @@ namespace TeleTwitterLInk.Data.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
                     b.Property<DateTime?>("ModifiedOn");
+
+                    b.Property<string>("Name");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
@@ -231,6 +269,13 @@ namespace TeleTwitterLInk.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TeleTwitterLink.Data.Models.TweeterUser", b =>
+                {
+                    b.HasOne("TeleTwitterLink.Data.Models.User")
+                        .WithMany("TweeterUsers")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

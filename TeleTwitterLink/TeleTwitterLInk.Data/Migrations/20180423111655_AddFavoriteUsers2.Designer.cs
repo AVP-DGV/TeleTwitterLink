@@ -11,9 +11,10 @@ using TeleTwitterLInk.Data;
 namespace TeleTwitterLInk.Data.Migrations
 {
     [DbContext(typeof(TeleTwitterLinkDbContext))]
-    partial class TeleTwitterLinkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180423111655_AddFavoriteUsers2")]
+    partial class AddFavoriteUsers2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -204,8 +205,6 @@ namespace TeleTwitterLInk.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed");
 
                     b.Property<string>("SecurityStamp");
-
-                    b.Property<string>("TestName");
 
                     b.Property<bool>("TwoFactorEnabled");
 

@@ -7,7 +7,7 @@
         $.post('/AddFavouriteUser/AddUser',
             data,
             function (response) {
-            var button = $('#' + id).text('Added').prop('disabled', true);
-        });
+                var button = $('#' + id).text('Added').prop('disabled', true);
+            });
     });
 });

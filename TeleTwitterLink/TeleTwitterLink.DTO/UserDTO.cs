@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TeleTwitterLink.DTO
+﻿namespace TeleTwitterLink.DTO
 {
     public class UserDTO
     {
@@ -8,6 +6,6 @@ namespace TeleTwitterLink.DTO
 
         public string Email { get; set; }
 
-        public string UserName { get; set; }
+        public string TestName { get; set; }
     }
 }
