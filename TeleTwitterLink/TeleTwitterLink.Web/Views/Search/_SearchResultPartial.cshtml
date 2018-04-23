@@ -6,42 +6,49 @@
 
 @if (@Model.SearchResults.Count() != 0)
 {
-    @*foreach (var result in Model.SearchResults)
-        {
-            <div class="col-sm-4 col-xs-8">
-                <div class="panel panel-default text-center">
-                    <div class="panel-heading">
-                        <h1>@result.Name</h1>
-                    </div>
-                    <div class="panel-body">
-                        <p><strong>FollowersCount: </strong>@result.FollowersCount</p>
-                        <p><strong>FriendsCount: </strong> @result.FriendsCount</p>
-                        <img src="@result.ImgUrl" />
-                    </div>
-                </div>
-            </div>*@
-
     <div id="search-results">
         <ul>
             @foreach (var result in Model.SearchResults)
             {
                 <li>
-                    <div class="profile">
-                        <img class="profile-image" src="@result.ImgUrl" />
-                        <span class="name">@result.Name</span>
+                    <form asp-controller="AddFavouriteUser" asp-action="AddUser" method="post">
+                        <div class="profile">
+                            <img class="profile-image" src="@result.ImgUrl" name="ImgUrl" />
+                            <input type="hidden" name="ImgUrl" value="@result.ImgUrl" />
 
-                        <div class="additional-info" id="additional-info">
-                            <p class="followers-count"><strong>FollowersCount: </strong>@result.FollowersCount</p>
-                            <p class="friend-count"><strong>FriendsCount: </strong> @result.FriendsCount</p>
-                            <p class="location">@result.Location</p>
-                            <p class="description" @result.Description></p>
+                            <span class="name">@result.Name</span>
+                            <input type="hidden" name="Name" value="@result.Name" />
+
+                            <div class="additional-info" id="additional-info">
+                                <p class="followers-count"><strong>FollowersCount: </strong>@result.FollowersCount</p>
+                                <input type="hidden" name="FollowersCount" value="@result.FollowersCount" />
+
+                                <p class="friend-count"><strong>FriendsCount: </strong> @result.FriendsCount</p>
+                                <input type="hidden" name="FriendsCount" value="@result.FriendsCount" />
+
+                                <p class="location">@result.Location</p>
+                                <input type="hidden" name="Location" value="@result.Location" />
+
+                                <p class="description" @result.Description></p>
+                                <input type="hidden" name="Description" value="@result.Description" />
+                            </div>
+
+                            <input type="hidden" name="TweeterUserId" value="@result.TweeterUserId" />
+
+                            <button class="button" type="button" name="Show more info">Show more</button>
+                            <button class="add-fav-user" id="@result.TweeterUserId" type="submit">Add</button>
                         </div>
+<<<<<<< HEAD
                         
                         <button class="button" type="button" name="Show more info">Show more</button>
                         <button class="add-fav-user" id="@result.TweeterUserId" type="button">Add</button>
                     </div>
+=======
+                    </form>
+>>>>>>> bb27cf1e5f0d3a7314a1cb17bb3044c77486837b
                 </li>
             }
+
         </ul>
     </div>
 }
