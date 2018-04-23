@@ -1,16 +1,14 @@
 ﻿@model SearchResultsViewModel
 
-@section CSS {
-    <link rel="stylesheet" href="~/css/SearchResults.css" />
-}
-
 @if (@Model.SearchResults.Count() != 0)
 {
     <div id="search-results">
         <ul>
             @foreach (var result in Model.SearchResults)
             {
-                <li>
+                int idForShowMoreButton = 0;
+
+                <li class="list-group-item">
                     <form asp-controller="AddFavouriteUser" asp-action="AddUser" method="post">
                         <div class="profile">
                             <img class="profile-image" src="@result.ImgUrl" name="ImgUrl" />
@@ -19,7 +17,7 @@
                             <span class="name">@result.Name</span>
                             <input type="hidden" name="Name" value="@result.Name" />
 
-                            <div class="additional-info" id="additional-info">
+                            <div hidden class="additional-info">
                                 <p class="followers-count"><strong>FollowersCount: </strong>@result.FollowersCount</p>
                                 <input type="hidden" name="FollowersCount" value="@result.FollowersCount" />
 
@@ -35,13 +33,17 @@
 
                             <input type="hidden" name="TweeterUserId" value="@result.TweeterUserId" />
 
-                            <button class="button" type="button" name="Show more info">Show more</button>
-                            <button class="add-fav-user" id="@result.TweeterUserId" type="submit">Add</button>
+                            @*<div class="container">
+                                <a href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">Toggle popover</a>
+                            </div>*@
+
+                            <button class="add-button" id="@result.TweeterUserId" type="submit">Add</button>
                         </div>
                     </form>
                 </li>
-            }
 
+                idForShowMoreButton++;
+            }
         </ul>
     </div>
 }
