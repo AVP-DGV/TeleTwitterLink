@@ -17,7 +17,7 @@ namespace TeleTwitterLInk.Data
         public DbSet<TwitterUser> TwitterUsers { get; set; }
 
         public DbSet<UserTwitterUser> UserTwitterUsers { get; set; }
-
+        
         public override int SaveChanges()
         {
             this.ApplyAuditInfoRules();
@@ -26,12 +26,19 @@ namespace TeleTwitterLInk.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder.Entity<User>()
-            //    .HasMany(x => x.TwitterUsers);
+            builder.Entity<UserTwitterUser>()
+                .HasKey(k => new { k.TwitterUserId, k.UserId });
 
-            //builder.Entity<TwitterUser>()
-            //    .HasMany(x => x.Users);
-      
+            builder.Entity<UserTwitterUser>()
+                .HasOne<User>(u => u.User)
+                .WithMany(t => t.UserTwitterUsers)
+                .HasForeignKey(k => k.UserId);
+
+            builder.Entity<UserTwitterUser>()
+                .HasOne<TwitterUser>(t => t.TwitterUser)
+                .WithMany(u => u.UserTwitterUsers)
+                .HasForeignKey(k => k.TwitterUserId);
+
             base.OnModelCreating(builder);
         }
 

@@ -19,6 +19,6 @@ namespace TeleTwitterLink.Data.Models
 
         public string Description { get; set; }
 
-        public ICollection<UserTwitterUser> Users { get; set; }
+        public ICollection<UserTwitterUser> UserTwitterUsers { get; set; }
     }
 }

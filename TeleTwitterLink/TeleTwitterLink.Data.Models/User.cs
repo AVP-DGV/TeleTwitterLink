@@ -21,6 +21,6 @@ namespace TeleTwitterLink.Data.Models
         [DataType(DataType.DateTime)]
         public DateTime? ModifiedOn { get; set; }
 
-        public ICollection<UserTwitterUser> TwitterUsers { get; set; }
+        public ICollection<UserTwitterUser> UserTwitterUsers { get; set; }
     }
 }

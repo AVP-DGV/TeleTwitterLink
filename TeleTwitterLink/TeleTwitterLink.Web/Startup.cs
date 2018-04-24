@@ -1,19 +1,18 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using TeleTwitterLink.Data.Models;
-using TeleTwitterLInk.Data;
-using TeleTwitterLink.Services.External;
-using TeleTwitterLink.Infrastructure.Providers;
 using TeleTwitterLink.Services.Data;
+using TeleTwitterLink.Services.Data.Contracts;
+using TeleTwitterLink.Services.External;
+using TeleTwitterLink.Services.External.Contracts;
+using TeleTwitterLInk.Data;
 using TeleTwitterLInk.Data.Repository;
 using TeleTwitterLInk.Data.Saver;
-using TeleTwitterLink.Services.External.Contracts;
-using TeleTwitterLink.Services.Data.Contracts;
 
 namespace TeleTwitterLink.Web
 {

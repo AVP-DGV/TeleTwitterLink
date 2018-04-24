@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TeleTwitterLink.DTO;
 using TeleTwitterLink.Services.Data.Contracts;
 using TeleTwitterLink.Web.Models.SearchViewModels;
 
