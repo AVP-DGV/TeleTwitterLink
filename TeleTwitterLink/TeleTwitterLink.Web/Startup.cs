@@ -87,7 +87,7 @@ namespace TeleTwitterLink.Web
 
             //services.AddAutoMapper();
 
-            services.AddScoped<IMappingProvider, MappingProvider>();
+            //AddScoped<IMappingProvider, MappingProvider>();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.

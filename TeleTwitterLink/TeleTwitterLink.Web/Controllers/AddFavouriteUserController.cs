@@ -10,27 +10,16 @@ namespace TeleTwitterLink.Web.Controllers
     {
         private readonly IUsersService usersService;
 
-        //bazata
-        //public AddFavouriteUserController(IUsersService usersService)
-        //{
-        //    this.usersService = usersService;
-        //}
-
-        public AddFavouriteUserController()
+        public AddFavouriteUserController(IUsersService usersService)
         {
+            this.usersService = usersService;
         }
-
-        //[HttpPost]
-        //public IActionResult AddUser()
-        //{
-        //    return Ok("VSICHKO tok:");
-        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddUser(TweeterUserDTO user)
+        public IActionResult AddUser(TwitterUserDTO user)
         {
-            //this.usersService.AddUser(user);
+            this.usersService.AddUser(user);
             return Ok("VSICHKO tok:");
         }
     }

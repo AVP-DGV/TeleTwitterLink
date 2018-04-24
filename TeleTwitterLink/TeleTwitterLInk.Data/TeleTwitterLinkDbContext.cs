@@ -14,7 +14,7 @@ namespace TeleTwitterLInk.Data
         {
         }
 
-        public DbSet<TweeterUser> TweetUsers { get; set; }
+        public DbSet<TwitterUser> TweetUsers { get; set; }
 
         public override int SaveChanges()
         {

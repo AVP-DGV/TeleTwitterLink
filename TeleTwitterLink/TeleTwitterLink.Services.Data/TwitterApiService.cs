@@ -14,11 +14,11 @@ namespace TeleTwitterLink.Services.Data
             this.jsonDeserializer = jsonDeserializer;
         }
 
-        public TweeterUserDTO[] FindTwitterUserByName(string name)
+        public TwitterUserDTO[] FindTwitterUserByName(string name)
         {
             var searchString = "https://api.twitter.com/1.1/users/search.json?q=";
             var foundUsersString = apiCall.GetTwitterData(searchString + name.Trim());
-            var deserializedUsers = this.jsonDeserializer.Deserialize<TweeterUserDTO[]>(foundUsersString);
+            var deserializedUsers = this.jsonDeserializer.Deserialize<TwitterUserDTO[]>(foundUsersString);
 
             return deserializedUsers;
         }

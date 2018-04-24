@@ -10,19 +10,27 @@ namespace TeleTwitterLink.Services.Data
     public class UsersService : IUsersService
     {
         private readonly ISaver saver;
-        private readonly IMappingProvider mapper;
-        private readonly IRepository<TweeterUser> users;
+        private readonly IRepository<TwitterUser> users;
 
-        public UsersService(ISaver saver, IMappingProvider mapper, IRepository<TweeterUser> users)
+        public UsersService(ISaver saver, IRepository<TwitterUser> users)
         {
             this.saver = saver;
-            this.mapper = mapper;
             this.users = users;
         }
 
-        public void AddUser(TweeterUserDTO dto)
+        public void AddUser(TwitterUserDTO dto)
         {
-            var model = this.mapper.MapTo<TweeterUser>(dto);
+            var model = new TwitterUser
+            {
+                TweeterUserId = dto.TweeterUserId,
+                Name = dto.Name,
+                FollowersCount = dto.FollowersCount,
+                FriendsCount = dto.FriendsCount,
+                Location = dto.Location,
+                ImgUrl = dto.Location,
+                Description = dto.Description
+            };
+
             this.users.Add(model);
             this.saver.SaveChanges();
         }
