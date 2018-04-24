@@ -14,7 +14,9 @@ namespace TeleTwitterLInk.Data
         {
         }
 
-        public DbSet<TwitterUser> TweetUsers { get; set; }
+        public DbSet<TwitterUser> TwitterUsers { get; set; }
+
+        public DbSet<UserTwitterUser> UserTwitterUsers { get; set; }
 
         public override int SaveChanges()
         {
@@ -24,9 +26,12 @@ namespace TeleTwitterLInk.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<User>()
-                .HasMany(x => x.TweeterUsers);
+            //builder.Entity<User>()
+            //    .HasMany(x => x.TwitterUsers);
 
+            //builder.Entity<TwitterUser>()
+            //    .HasMany(x => x.Users);
+      
             base.OnModelCreating(builder);
         }
 

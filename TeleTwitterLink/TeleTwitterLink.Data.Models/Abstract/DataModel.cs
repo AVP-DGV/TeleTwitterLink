@@ -7,7 +7,7 @@ namespace TeleTwitterLink.Data.Models.Abstract
     {
         [Key]
         public int Id { get; set; }
-
+        
         public bool IsDeleted { get; set; }
 
         [DataType(DataType.DateTime)]

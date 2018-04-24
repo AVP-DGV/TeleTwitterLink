@@ -11,9 +11,10 @@ using TeleTwitterLInk.Data;
 namespace TeleTwitterLInk.Data.Migrations
 {
     [DbContext(typeof(TeleTwitterLinkDbContext))]
-    partial class TeleTwitterLinkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180424101624_removeRealationshipsBetweenUsersAndTwitterUsers")]
+    partial class removeRealationshipsBetweenUsersAndTwitterUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -295,12 +296,12 @@ namespace TeleTwitterLInk.Data.Migrations
             modelBuilder.Entity("TeleTwitterLink.Data.Models.UserTwitterUser", b =>
                 {
                     b.HasOne("TeleTwitterLink.Data.Models.TwitterUser", "TwitterUser")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("TwitterUserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TeleTwitterLink.Data.Models.User", "User")
-                        .WithMany("TwitterUsers")
+                        .WithMany()
                         .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618

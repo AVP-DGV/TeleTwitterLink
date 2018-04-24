@@ -11,9 +11,10 @@ using TeleTwitterLInk.Data;
 namespace TeleTwitterLInk.Data.Migrations
 {
     [DbContext(typeof(TeleTwitterLinkDbContext))]
-    partial class TeleTwitterLinkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180424100938_JoinTable fo real")]
+    partial class JoinTableforeal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,7 +156,11 @@ namespace TeleTwitterLInk.Data.Migrations
 
                     b.Property<string>("TweeterUserId");
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("TwitterUsers");
                 });
@@ -203,6 +208,8 @@ namespace TeleTwitterLInk.Data.Migrations
 
                     b.Property<string>("TestName");
 
+                    b.Property<int?>("TwitterUserId");
+
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
@@ -217,6 +224,8 @@ namespace TeleTwitterLInk.Data.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("TwitterUserId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -234,9 +243,13 @@ namespace TeleTwitterLInk.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedOn");
 
-                    b.Property<int>("TwitterUserId");
+                    b.Property<int?>("TwitterUserId");
+
+                    b.Property<int>("TwitterUser_Id");
 
                     b.Property<string>("UserId");
+
+                    b.Property<string>("User_Id");
 
                     b.HasKey("Id");
 
@@ -292,15 +305,28 @@ namespace TeleTwitterLInk.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("TeleTwitterLink.Data.Models.TwitterUser", b =>
+                {
+                    b.HasOne("TeleTwitterLink.Data.Models.User")
+                        .WithMany("TwitterUsers")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("TeleTwitterLink.Data.Models.User", b =>
+                {
+                    b.HasOne("TeleTwitterLink.Data.Models.TwitterUser")
+                        .WithMany("Users")
+                        .HasForeignKey("TwitterUserId");
+                });
+
             modelBuilder.Entity("TeleTwitterLink.Data.Models.UserTwitterUser", b =>
                 {
                     b.HasOne("TeleTwitterLink.Data.Models.TwitterUser", "TwitterUser")
-                        .WithMany("Users")
-                        .HasForeignKey("TwitterUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("TwitterUserId");
 
                     b.HasOne("TeleTwitterLink.Data.Models.User", "User")
-                        .WithMany("TwitterUsers")
+                        .WithMany()
                         .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618

@@ -1,4 +1,5 @@
-﻿using TeleTwitterLink.Data.Models.Abstract;
+﻿using System.Collections.Generic;
+using TeleTwitterLink.Data.Models.Abstract;
 
 namespace TeleTwitterLink.Data.Models
 {
@@ -17,5 +18,7 @@ namespace TeleTwitterLink.Data.Models
         public string ImgUrl { get; set; }
 
         public string Description { get; set; }
+
+        public ICollection<UserTwitterUser> Users { get; set; }
     }
 }

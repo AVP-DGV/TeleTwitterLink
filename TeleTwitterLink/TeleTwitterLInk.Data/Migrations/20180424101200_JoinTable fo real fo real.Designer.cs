@@ -11,9 +11,10 @@ using TeleTwitterLInk.Data;
 namespace TeleTwitterLInk.Data.Migrations
 {
     [DbContext(typeof(TeleTwitterLinkDbContext))]
-    partial class TeleTwitterLinkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180424101200_JoinTable fo real fo real")]
+    partial class JoinTableforealforeal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,7 +156,11 @@ namespace TeleTwitterLInk.Data.Migrations
 
                     b.Property<string>("TweeterUserId");
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("TwitterUsers");
                 });
@@ -203,6 +208,8 @@ namespace TeleTwitterLInk.Data.Migrations
 
                     b.Property<string>("TestName");
 
+                    b.Property<int?>("TwitterUserId");
+
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
@@ -217,6 +224,8 @@ namespace TeleTwitterLInk.Data.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("TwitterUserId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -292,15 +301,29 @@ namespace TeleTwitterLInk.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("TeleTwitterLink.Data.Models.TwitterUser", b =>
+                {
+                    b.HasOne("TeleTwitterLink.Data.Models.User")
+                        .WithMany("TwitterUsers")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("TeleTwitterLink.Data.Models.User", b =>
+                {
+                    b.HasOne("TeleTwitterLink.Data.Models.TwitterUser")
+                        .WithMany("Users")
+                        .HasForeignKey("TwitterUserId");
+                });
+
             modelBuilder.Entity("TeleTwitterLink.Data.Models.UserTwitterUser", b =>
                 {
                     b.HasOne("TeleTwitterLink.Data.Models.TwitterUser", "TwitterUser")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("TwitterUserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TeleTwitterLink.Data.Models.User", "User")
-                        .WithMany("TwitterUsers")
+                        .WithMany()
                         .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
