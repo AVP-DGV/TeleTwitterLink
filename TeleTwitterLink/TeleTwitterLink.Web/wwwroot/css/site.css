@@ -91,4 +91,6 @@
     display: inline-block;
 }
 
-
+.panel-info {
+    color: black !important;
+}

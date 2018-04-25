@@ -14,30 +14,19 @@
                 {
                     <li class="list-group-item">
                         <form asp-controller="AddFavouriteUser" asp-action="AddUser" method="post">
-                            <div class="profile">
-                                <img class="profile-image" src="@result.ImgUrl" name="ImgUrl" />
-                                <input type="hidden" name="ImgUrl" value="@result.ImgUrl" />
-
-                                <span class="name">@result.Name</span>
-                                <input type="hidden" name="Name" value="@result.Name" />
-
-                                <div hidden class="additional-info">
-                                    <p class="followers-count"><strong>FollowersCount: </strong>@result.FollowersCount</p>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <img class="profile-image" src="@result.ImgUrl" name="ImgUrl" />
+                                    <input type="hidden" name="ImgUrl" value="@result.ImgUrl" />
+                                    <span class="name">@result.Name</span>
+                                    <input type="hidden" name="Name" value="@result.Name" />
                                     <input type="hidden" name="FollowersCount" value="@result.FollowersCount" />
-
-                                    <p class="friend-count"><strong>FriendsCount: </strong> @result.FriendsCount</p>
                                     <input type="hidden" name="FriendsCount" value="@result.FriendsCount" />
-
-                                    <p class="location">@result.Location</p>
                                     <input type="hidden" name="Location" value="@result.Location" />
-
-                                    <p class="description" @result.Description></p>
                                     <input type="hidden" name="Description" value="@result.Description" />
+                                    <input type="hidden" name="TweeterUserId" value="@result.TweeterUserId" />
+                                    <button class="button" id="@result.TweeterUserId" type="submit">Add</button>
                                 </div>
-
-                                <input type="hidden" name="TweeterUserId" value="@result.TweeterUserId" />
-
-                                <button class="button" id="@result.TweeterUserId" type="submit">Add</button>
                             </div>
                         </form>
                     </li>
@@ -45,21 +34,12 @@
                 else
                 {
                     <li class="list-group-item">
-                        <div class="profile">
-                            <img class="profile-image" src="@result.ImgUrl" name="ImgUrl" />
-
-                            <span class="name">@result.Name</span>
-
-                            <div hidden class="additional-info">
-                                <p class="followers-count"><strong>FollowersCount: </strong>@result.FollowersCount</p>
-
-                                <p class="friend-count"><strong>FriendsCount: </strong> @result.FriendsCount</p>
-
-                                <p class="location">@result.Location</p>
-
-                                <p class="description" @result.Description></p>
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <img class="profile-image" src="@result.ImgUrl" name="ImgUrl" />
+                                <span class="name">@result.Name</span>
+                                <button class="button" disabled>Added</button>
                             </div>
-                            <button class="button" disabled>Added</button>
                         </div>
                     </li>
                 }
