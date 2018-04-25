@@ -24,5 +24,7 @@ namespace TeleTwitterLink.DTO
 
         [JsonProperty("description")]
         public string Description { get; set; }
+
+        public bool IsSaved { get; set; }
     }
 }

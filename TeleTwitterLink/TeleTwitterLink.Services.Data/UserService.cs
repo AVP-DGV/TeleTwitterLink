@@ -11,14 +11,14 @@ namespace TeleTwitterLink.Services.Data
     public class UsersService : IUsersService
     {
         private readonly ISaver saver;
-        private readonly IRepository<TwitterUser> users;
+        private readonly IRepository<TwitterUser> twitteUsers;
         private readonly IRepository<User> aspUsers;
         private readonly IRepository<UserTwitterUser> userTwitterUsers;
 
-        public UsersService(ISaver saver, IRepository<TwitterUser> users, IRepository<User> aspUsers, IRepository<UserTwitterUser> usersTwitterUsers)
+        public UsersService(ISaver saver, IRepository<TwitterUser> twitterUsers, IRepository<User> aspUsers, IRepository<UserTwitterUser> usersTwitterUsers)
         {
             this.saver = saver;
-            this.users = users;
+            this.twitteUsers = twitterUsers;
             this.aspUsers = aspUsers;
             this.userTwitterUsers = usersTwitterUsers;
         }
@@ -36,7 +36,7 @@ namespace TeleTwitterLink.Services.Data
                 Description = dto.Description,
                 UserTwitterUsers = new List<UserTwitterUser>()
             };
-            
+
             User aspUser = this.aspUsers.All
                 .FirstOrDefault(u => u.Id == aspUserId);
 
@@ -45,9 +45,42 @@ namespace TeleTwitterLink.Services.Data
                 User = aspUser
             });
 
-            this.users.Add(model);
-            
+            this.twitteUsers.Add(model);
+
             this.saver.SaveChanges();
+        }
+
+        public IList<TwitterUserDTO> TakeFavouriteTwitterUsers(string aspUserId)
+        {
+            var twitterUsersIds = this.userTwitterUsers.All
+                .Where(x => x.UserId == aspUserId)
+                .Select(x => x.TwitterUserId)
+                .ToList();
+
+            var twitterUsers = this.twitteUsers.All
+                .Where(x => twitterUsersIds.Contains(x.Id))
+                .Select(x => new TwitterUserDTO()
+                {
+                    Description = x.Description,
+                    FollowersCount = x.FollowersCount,
+                    FriendsCount = x.FriendsCount,
+                    ImgUrl = x.ImgUrl,
+                    Location = x.Location,
+                    Name = x.Name,
+                    TweeterUserId = x.TweeterUserId
+                })
+                .ToList();
+
+            return twitterUsers;
+        }
+
+        public IList<TwitterUserDTO> FilterSearchReault(IList<TwitterUserDTO> searchResult)
+        {
+            var filtered = new List<TwitterUserDTO>();
+
+            //set the prop IsSaved to true if the user is already saved 
+
+            return filtered;
         }
     }
 }

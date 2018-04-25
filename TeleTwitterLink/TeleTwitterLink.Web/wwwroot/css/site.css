@@ -57,10 +57,6 @@
     font-size: 25px;
 }
 
-.additional-info {
-    overflow: hidden;
-}
-
 .more-info {
     width: 100%;
 }
@@ -69,7 +65,7 @@
     border-radius: 40%;
 }
 
-.add-button {
+.button {
     background-color: #4880c4;
     border: none;
     color: white;
@@ -82,5 +78,15 @@
     float: right;
 }
 
-.add-button:disabled {
+/*.button:disabled {
+
+}*/
+
+.container-twitter-user {
+    border-bottom: dotted;
 }
+
+/*.additional-info {
+}*/
+
+

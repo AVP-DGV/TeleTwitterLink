@@ -10,8 +10,6 @@
         <ul>
             @foreach (var result in Model.SearchResults)
             {
-                int idForShowMoreButton = 0;
-
                 <li class="list-group-item">
                     <form asp-controller="AddFavouriteUser" asp-action="AddUser" method="post">
                         <div class="profile">
@@ -37,25 +35,10 @@
 
                             <input type="hidden" name="TweeterUserId" value="@result.TweeterUserId" />
 
-                            @*<button class="button" type="button" name="Show more info">Show more</button>
-                                <button class="add-fav-user" id="@result.TweeterUserId" type="submit">Add</button>*@
-                            @*@Html.ActionLink("Add", "AddUser", "AddFavouriteUserController", new { dto = result}, new { @class= "btn"})*@
-                            <button class="add-button" id="@result.TweeterUserId" type="submit">Add</button>
-
+                            <button class="button" id="@result.TweeterUserId" type="submit">Add</button>
                         </div>
                     </form>
                 </li>
-
-                @*<div class="container">
-                        <a href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">Toggle popover</a>
-                    </div>*@
-
-                @*<button class="add-button" id="@result.TweeterUserId" type="submit">Add</button>*@
-
-                @*</form>
-                    </li>*@
-
-                idForShowMoreButton++;
             }
         </ul>
     </div>
