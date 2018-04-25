@@ -32,7 +32,7 @@ namespace TeleTwitterLink.Services.Data
                 FollowersCount = dto.FollowersCount,
                 FriendsCount = dto.FriendsCount,
                 Location = dto.Location,
-                ImgUrl = dto.Location,
+                ImgUrl = dto.ImgUrl,
                 Description = dto.Description,
                 UserTwitterUsers = new List<UserTwitterUser>()
             };
@@ -74,13 +74,21 @@ namespace TeleTwitterLink.Services.Data
             return twitterUsers;
         }
 
-        public IList<TwitterUserDTO> FilterSearchReault(IList<TwitterUserDTO> searchResult)
+        public IList<TwitterUserDTO> FilterSearchReault(IList<TwitterUserDTO> searchResult, string aspUserId)
         {
-            var filtered = new List<TwitterUserDTO>();
-
-            //set the prop IsSaved to true if the user is already saved 
-
-            return filtered;
+            var favouriteTwitterUserIds = this.TakeFavouriteTwitterUsers(aspUserId)
+                .Select(x => x.TweeterUserId)
+                .ToList();
+            
+            for (int i = 0; i < searchResult.Count(); i++)
+            {
+                if(favouriteTwitterUserIds.Contains(searchResult[i].TweeterUserId))
+                {
+                    searchResult[i].IsSaved = true;
+                }
+            }
+            
+            return searchResult;
         }
     }
 }

@@ -9,5 +9,7 @@ namespace TeleTwitterLink.Services.Data.Contracts
         void AddUser(TwitterUserDTO dto, string aspUserId);
 
         IList<TwitterUserDTO> TakeFavouriteTwitterUsers(string aspUserId);
+
+        IList<TwitterUserDTO> FilterSearchReault(IList<TwitterUserDTO> searchResult, string aspUserId);
     }
 }

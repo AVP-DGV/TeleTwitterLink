@@ -78,15 +78,17 @@
     float: right;
 }
 
-/*.button:disabled {
 
-}*/
+.button:disabled {
+    background-color: #c3cee0;
+}
 
 .container-twitter-user {
     border-bottom: dotted;
 }
 
-/*.additional-info {
-}*/
+.additional-info {
+    display: inline-block;
+}
 
 
