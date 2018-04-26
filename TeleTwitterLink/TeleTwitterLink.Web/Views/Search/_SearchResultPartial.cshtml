@@ -13,19 +13,19 @@
                 @if (result.IsSaved == false)
                 {
                     <li class="list-group-item">
-                        <form asp-controller="AddFavouriteUser" asp-action="AddUser" method="post">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">
-                                    <img class="profile-image" src="@result.ImgUrl" name="ImgUrl" />
-                                    <input type="hidden" name="ImgUrl" value="@result.ImgUrl" />
-                                    <span class="name">@result.Name</span>
-                                    <input type="hidden" name="Name" value="@result.Name" />
-                                    <input type="hidden" name="FollowersCount" value="@result.FollowersCount" />
-                                    <input type="hidden" name="FriendsCount" value="@result.FriendsCount" />
-                                    <input type="hidden" name="Location" value="@result.Location" />
-                                    <input type="hidden" name="Description" value="@result.Description" />
-                                    <input type="hidden" name="TweeterUserId" value="@result.TweeterUserId" />
-                                    <button class="button" id="@result.TweeterUserId" type="submit">Add</button>
+                        <form asp-controller="AddTwitterUser" asp-action="AddUser" method="post">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <img class="profile-image" src="@result.ImgUrl" name="ImgUrl" />
+                                        <input type="hidden" name="ImgUrl" value="@result.ImgUrl" />
+                                        <span class="name">@result.Name</span>
+                                        <input type="hidden" name="Name" value="@result.Name" />
+                                        <input type="hidden" name="FollowersCount" value="@result.FollowersCount" />
+                                        <input type="hidden" name="FriendsCount" value="@result.FriendsCount" />
+                                        <input type="hidden" name="Location" value="@result.Location" />
+                                        <input type="hidden" name="Description" value="@result.Description" />
+                                        <input type="hidden" name="TweeterUserId" value="@result.TweeterUserId" />
+                                        <button class="button" id="@result.TweeterUserId" type="submit">Add</button>
                                 </div>
                             </div>
                         </form>

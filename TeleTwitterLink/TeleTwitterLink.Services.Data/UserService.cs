@@ -27,7 +27,7 @@ namespace TeleTwitterLink.Services.Data
         {
             var model = new TwitterUser
             {
-                TweeterUserId = dto.TweeterUserId,
+                TweeterUserId = dto.TwitterUserId,
                 Name = dto.Name,
                 FollowersCount = dto.FollowersCount,
                 FriendsCount = dto.FriendsCount,
@@ -67,7 +67,7 @@ namespace TeleTwitterLink.Services.Data
                     ImgUrl = x.ImgUrl,
                     Location = x.Location,
                     Name = x.Name,
-                    TweeterUserId = x.TweeterUserId
+                    TwitterUserId = x.TweeterUserId
                 })
                 .ToList();
 
@@ -77,18 +77,30 @@ namespace TeleTwitterLink.Services.Data
         public IList<TwitterUserDTO> FilterSearchReault(IList<TwitterUserDTO> searchResult, string aspUserId)
         {
             var favouriteTwitterUserIds = this.TakeFavouriteTwitterUsers(aspUserId)
-                .Select(x => x.TweeterUserId)
+                .Select(x => x.TwitterUserId)
                 .ToList();
             
             for (int i = 0; i < searchResult.Count(); i++)
             {
-                if(favouriteTwitterUserIds.Contains(searchResult[i].TweeterUserId))
+                if(favouriteTwitterUserIds.Contains(searchResult[i].TwitterUserId))
                 {
                     searchResult[i].IsSaved = true;
                 }
             }
             
             return searchResult;
+        }
+
+        public void RemoveTwitterUser(string twitterUserId)
+        {
+            var idInDB = this.twitteUsers.All
+                  .First(x => x.TweeterUserId == twitterUserId).Id;
+
+            this.userTwitterUsers.All
+                .First(x => x.TwitterUserId == idInDB)
+                .IsDeleted = true;
+
+            this.saver.SaveChanges();
         }
     }
 }

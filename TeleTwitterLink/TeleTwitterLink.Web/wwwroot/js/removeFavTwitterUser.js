@@ -1,14 +1,14 @@
 ﻿$(function () {
-    $('#search-results').on('click', 'ul li button', function (event) {
+    $('#favourite-users').on('click', 'div div div button', function (event) {
         event.preventDefault();
         var data = $(this).closest('form').serialize();
         var id = $(this).attr('id');
 
         $.post(
-            '/AddTwitterUser/AddUser',
+            '/RemoveTwitterUser/RemoveUser',
             data,
             function (response) {
-                var button = $('#' + id).text('Added').prop('disabled', true);
+                var button = $('#' + id).text('Removed').prop('disabled', true);
             });
     });
 });

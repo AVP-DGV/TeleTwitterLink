@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TeleTwitterLink.Data.Models;
 using TeleTwitterLink.DTO;
 
 namespace TeleTwitterLink.Services.Data.Contracts
@@ -11,5 +10,7 @@ namespace TeleTwitterLink.Services.Data.Contracts
         IList<TwitterUserDTO> TakeFavouriteTwitterUsers(string aspUserId);
 
         IList<TwitterUserDTO> FilterSearchReault(IList<TwitterUserDTO> searchResult, string aspUserId);
+
+        void RemoveTwitterUser(string twitterUserId);
     }
 }

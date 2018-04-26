@@ -1,18 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using TeleTwitterLink.Data.Models;
 using TeleTwitterLink.DTO;
 using TeleTwitterLink.Services.Data.Contracts;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
-using TeleTwitterLink.Data.Models;
 
 namespace TeleTwitterLink.Web.Controllers
 {
-    public class AddFavouriteUserController : Controller
+    public class AddTwitterUserController : Controller
     {
         private readonly IUsersService usersService;
         private UserManager<User> userManager;
 
-        public AddFavouriteUserController(IUsersService usersService, UserManager<User> userManager)
+        public AddTwitterUserController(IUsersService usersService, UserManager<User> userManager)
         {
             this.userManager = userManager;
             this.usersService = usersService;

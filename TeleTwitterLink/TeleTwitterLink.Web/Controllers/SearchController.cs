@@ -36,7 +36,7 @@ namespace TeleTwitterLink.Web.Controllers
                 return Ok("There were validation errors");
             }
 
-            var searched = twitApiService.FindTwitterUserByName(model.SearchInput);
+            var searched = this.twitApiService.FindTwitterUserByName(model.SearchInput);
             
             var returnedView = new SearchResultsViewModel() { SearchResults = searched };
 

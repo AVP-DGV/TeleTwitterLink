@@ -5,7 +5,7 @@ namespace TeleTwitterLink.DTO
     public class TwitterUserDTO
     {
         [JsonProperty("id_str")]
-        public string TweeterUserId { get; set; }
+        public string TwitterUserId { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
