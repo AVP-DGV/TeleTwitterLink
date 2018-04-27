@@ -3,7 +3,7 @@
         event.preventDefault();
         var data = $(this).closest('form').serialize();
         var id = $(this).attr('id');
-
+        console.log(data);
         $.post(
             '/RemoveTwitterUser/RemoveUser',
             data,

@@ -11,43 +11,57 @@ namespace TeleTwitterLink.Services.Data
     public class UsersService : IUsersService
     {
         private readonly ISaver saver;
-        private readonly IRepository<TwitterUser> twitteUsers;
+        private readonly IRepository<TwitterUser> twitterUsers;
         private readonly IRepository<User> aspUsers;
         private readonly IRepository<UserTwitterUser> userTwitterUsers;
 
         public UsersService(ISaver saver, IRepository<TwitterUser> twitterUsers, IRepository<User> aspUsers, IRepository<UserTwitterUser> usersTwitterUsers)
         {
             this.saver = saver;
-            this.twitteUsers = twitterUsers;
+            this.twitterUsers = twitterUsers;
             this.aspUsers = aspUsers;
             this.userTwitterUsers = usersTwitterUsers;
         }
 
         public void AddUser(TwitterUserDTO dto, string aspUserId)
         {
-            var model = new TwitterUser
+           var addedUser = this.twitterUsers.All
+                .FirstOrDefault(x => x.TwitterUserId == dto.TwitterUserId);
+
+            if(addedUser != null)
             {
-                TweeterUserId = dto.TwitterUserId,
-                Name = dto.Name,
-                FollowersCount = dto.FollowersCount,
-                FriendsCount = dto.FriendsCount,
-                Location = dto.Location,
-                ImgUrl = dto.ImgUrl,
-                Description = dto.Description,
-                UserTwitterUsers = new List<UserTwitterUser>()
-            };
+                this.userTwitterUsers.AllAndDeleted
+                    .FirstOrDefault(x => x.TwitterUserId == addedUser.Id)
+                    .IsDeleted = false;
 
-            User aspUser = this.aspUsers.All
-                .FirstOrDefault(u => u.Id == aspUserId);
-
-            model.UserTwitterUsers.Add(new UserTwitterUser()
+                this.saver.SaveChanges();
+            }
+            else
             {
-                User = aspUser
-            });
+                var model = new TwitterUser
+                {
+                    TwitterUserId = dto.TwitterUserId,
+                    Name = dto.Name,
+                    FollowersCount = dto.FollowersCount,
+                    FriendsCount = dto.FriendsCount,
+                    Location = dto.Location,
+                    ImgUrl = dto.ImgUrl,
+                    Description = dto.Description,
+                    UserTwitterUsers = new List<UserTwitterUser>()
+                };
 
-            this.twitteUsers.Add(model);
+                User aspUser = this.aspUsers.All
+                    .FirstOrDefault(u => u.Id == aspUserId);
 
-            this.saver.SaveChanges();
+                model.UserTwitterUsers.Add(new UserTwitterUser()
+                {
+                    User = aspUser
+                });
+
+                this.twitterUsers.Add(model);
+
+                this.saver.SaveChanges();
+            }
         }
 
         public IList<TwitterUserDTO> TakeFavouriteTwitterUsers(string aspUserId)
@@ -57,7 +71,7 @@ namespace TeleTwitterLink.Services.Data
                 .Select(x => x.TwitterUserId)
                 .ToList();
 
-            var twitterUsers = this.twitteUsers.All
+            var twitterUsers = this.twitterUsers.All
                 .Where(x => twitterUsersIds.Contains(x.Id))
                 .Select(x => new TwitterUserDTO()
                 {
@@ -67,7 +81,7 @@ namespace TeleTwitterLink.Services.Data
                     ImgUrl = x.ImgUrl,
                     Location = x.Location,
                     Name = x.Name,
-                    TwitterUserId = x.TweeterUserId
+                    TwitterUserId = x.TwitterUserId
                 })
                 .ToList();
 
@@ -80,21 +94,24 @@ namespace TeleTwitterLink.Services.Data
                 .Select(x => x.TwitterUserId)
                 .ToList();
             
-            for (int i = 0; i < searchResult.Count(); i++)
+            if(favouriteTwitterUserIds.Count != 0)
             {
-                if(favouriteTwitterUserIds.Contains(searchResult[i].TwitterUserId))
+                for (int i = 0; i < searchResult.Count(); i++)
                 {
-                    searchResult[i].IsSaved = true;
+                    if (favouriteTwitterUserIds.Contains(searchResult[i].TwitterUserId))
+                    {
+                        searchResult[i].IsSaved = true;
+                    }
                 }
             }
-            
+
             return searchResult;
         }
 
         public void RemoveTwitterUser(string twitterUserId)
         {
-            var idInDB = this.twitteUsers.All
-                  .First(x => x.TweeterUserId == twitterUserId).Id;
+            var idInDB = this.twitterUsers.All
+                  .First(x => x.TwitterUserId == twitterUserId).Id;
 
             this.userTwitterUsers.All
                 .First(x => x.TwitterUserId == idInDB)

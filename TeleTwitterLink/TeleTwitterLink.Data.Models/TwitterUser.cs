@@ -5,7 +5,7 @@ namespace TeleTwitterLink.Data.Models
 {
     public class TwitterUser : DataModel
     {
-        public string TweeterUserId { get; set; }
+        public string TwitterUserId { get; set; }
 
         public string Name { get; set; }
 
