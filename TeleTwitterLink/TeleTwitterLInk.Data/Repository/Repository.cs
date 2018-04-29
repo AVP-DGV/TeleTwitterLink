@@ -18,7 +18,6 @@ namespace TeleTwitterLInk.Data.Repository
                 throw new ArgumentNullException("DbContext cant be null");
             }
 
-
             this.context = context;
         }
 

@@ -5,20 +5,20 @@ namespace TeleTwitterLink.Services.Data
 {
     public class TwitterApiService : ITwitterApiService
     {
-        private ITwitterApiCall apiCall;
-        private IJsonDeserializer jsonDeserializer;
+        private IDeserializerOfJson jsonDeserializer;
+        private ITwitterApi apiCall;
 
-        public TwitterApiService(ITwitterApiCall apiCall, IJsonDeserializer jsonDeserializer)
+        public TwitterApiService(IDeserializerOfJson jsonDeserializer, ITwitterApi apiCall)
         {
-            this.apiCall = apiCall;
             this.jsonDeserializer = jsonDeserializer;
+            this.apiCall = apiCall;
         }
 
         public TwitterUserDTO[] FindTwitterUserByName(string name)
         {
-            var searchString = "https://api.twitter.com/1.1/users/search.json?q=";
-            var foundUsersString = apiCall.GetTwitterData(searchString + name.Trim());
-            var deserializedUsers = this.jsonDeserializer.Deserialize<TwitterUserDTO[]>(foundUsersString);
+            var search = "https://api.twitter.com/1.1/users/search.json?q=";
+            var foundUsers = this.apiCall.GetData(search + name.Trim());
+            var deserializedUsers = this.jsonDeserializer.DeserializeJson<TwitterUserDTO[]>(foundUsers);
 
             return deserializedUsers;
         }

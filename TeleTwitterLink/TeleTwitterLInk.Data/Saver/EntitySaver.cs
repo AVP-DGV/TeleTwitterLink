@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TeleTwitterLInk.Data.Saver
+﻿namespace TeleTwitterLInk.Data.Saver
 {
     public class EntitySaver : ISaver
     {

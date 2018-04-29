@@ -75,9 +75,9 @@ namespace TeleTwitterLink.Web
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<ITwitterApiService, TwitterApiService>();
-            services.AddTransient<ITwitterApiCall, TwitterApiCall>();
+            services.AddTransient<ITwitterApi, TwitterApi>();
             services.AddTransient<ITwitterKeys, TwitterKeys>();
-            services.AddTransient<IJsonDeserializer, JsonDeserializer>();
+            services.AddTransient<IDeserializerOfJson, DeserializerOfJson>();
         }
 
         private void RegisterInfrastructure(IServiceCollection services)
