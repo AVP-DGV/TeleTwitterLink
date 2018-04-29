@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
@@ -12,9 +13,10 @@ namespace TeleTwitterLink.Services.Data
 {
     public class TwitterApiCall : ITwitterApiCall
     {
-        private static string version = "1.0";
-        private static string signatureMethod = "HMAC-SHA1";
-        private ITwitterKeys keys;
+        private const string Version = "1.0";
+        private const string SignatureMethod = "HMAC-SHA1";
+        private static readonly DateTime EpochDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+        private readonly ITwitterKeys keys;
 
         public TwitterApiCall(ITwitterKeys keys)
         {
@@ -23,148 +25,87 @@ namespace TeleTwitterLink.Services.Data
 
         public string GetTwitterData(string resourceurl)
         {
-            List<string> parameterlist;
+            IEnumerable<string> parameters;
 
-            if (resourceurl.Contains("?"))
+            var index = resourceurl.IndexOf('?');
+            if (index >= 0)
             {
-                parameterlist = GetParametersFromUrl(resourceurl);
-                resourceurl = resourceurl.Substring(0, resourceurl.IndexOf('?'));
+                parameters = GetParametersFromUrl(resourceurl.Substring(index + 1));
+                resourceurl = resourceurl.Substring(0, index);
             }
             else
             {
-                parameterlist = null;
+                parameters = Array.Empty<string>();
             }
 
-            string authheader = BuildHeader(resourceurl, parameterlist);
-            string jsonresponse = TwitterWebRequest(resourceurl, authheader, parameterlist);
-            return jsonresponse;
+            var authheader = BuildHeader(resourceurl, parameters);
+            return TwitterWebRequest(resourceurl, authheader, parameters);;
         }
 
-        private List<string> GetParametersFromUrl(string resourceUrl)
+        private IEnumerable<string> GetParametersFromUrl(string queryString)
         {
-            string querystring = resourceUrl.Substring(resourceUrl.IndexOf('?') + 1);
-            List<string> listtoreturn = new List<string>();
-            NameValueCollection nv = HttpUtility.ParseQueryString(querystring);
-
-            foreach (string parameter in nv)
-            {
-                listtoreturn.Add(parameter + "=" + Uri.EscapeDataString(nv[parameter]));
-            }
-
-            return listtoreturn;
+            NameValueCollection nv = HttpUtility.ParseQueryString(queryString);
+            return nv
+                .AllKeys
+                .Select(key => string.Concat(key, "=", Uri.EscapeDataString(nv[key])))
+                .ToList();
         }
 
-        private string BuildHeader(string resourceurl, List<string> parameterlist)
+        private string BuildHeader(string resourceurl, IEnumerable<string> parameterlist)
         {
-            string nonce = Convert.ToBase64String(new ASCIIEncoding().GetBytes(DateTime.Now.Ticks.ToString()));
-            TimeSpan timespan = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            string timestamp = Convert.ToInt64(timespan.TotalSeconds).ToString();
-            string signature = GetSignature(nonce, timestamp, resourceurl, parameterlist);
+            var now = DateTime.UtcNow;
+            var nonce = Convert.ToBase64String(new ASCIIEncoding().GetBytes(now.Ticks.ToString()));
+            var epochTimespan = now - EpochDateTime;
+            var epochSeconds = ((long)epochTimespan.TotalSeconds).ToString();
+            var signature = GetSignature(nonce, epochSeconds, resourceurl, parameterlist);
 
-            var HeaderFormat = "OAuth " +
-            "oauth_consumer_key=\"{0}\", " +
-            "oauth_nonce=\"{1}\", " +
-            "oauth_signature=\"{2}\", " +
-            "oauth_signature_method=\"{3}\", " +
-            "oauth_timestamp=\"{4}\", " +
-            "oauth_token=\"{5}\", " +
-            "oauth_version=\"{6}\"";
-
-            string authHeader = string.Format(HeaderFormat,
-            Uri.EscapeDataString(keys.ConsumerKey),
-            Uri.EscapeDataString(nonce),
-            Uri.EscapeDataString(signature),
-            Uri.EscapeDataString(signatureMethod),
-            Uri.EscapeDataString(timestamp),
-            Uri.EscapeDataString(keys.AccessToken),
-            Uri.EscapeDataString(version)
-            );
-
-            return authHeader;
+            return string.Concat("OAuth ",
+                "oauth_consumer_key=\"", keys.ConsumerKey, "\", ",
+                "oauth_nonce=\"", nonce, "\", ",
+                "oauth_signature=\"", signature, "\", ",
+                "oauth_signature_method=\"", SignatureMethod, "\", ",
+                "oauth_timestamp=\"", epochSeconds, "\", ",
+                "oauth_token=\"", keys.AccessToken, "\", ",
+                "oauth_version=\"", Version, "\"");
         }
 
-        private string GetSignature(string nonce, string timestamp, string resourceurl, List<string> parameterlist)
+        private string GetSignature(string nonce, string timestamp, string resourceurl, IEnumerable<string> parameterlist)
         {
-            string baseString = GenerateBaseString(nonce, timestamp, parameterlist);
+            var baseString = GenerateBaseString(nonce, timestamp, parameterlist);
             baseString = string.Concat("GET&", Uri.EscapeDataString(resourceurl), "&", Uri.EscapeDataString(baseString));
             var signingKey = string.Concat(Uri.EscapeDataString(keys.ConsumerSecret), "&", Uri.EscapeDataString(keys.AccessSecret));
-
-            string signature;
-            HMACSHA1 hasher = new HMACSHA1(Encoding.ASCII.GetBytes(signingKey));
-            signature = Convert.ToBase64String(hasher.ComputeHash(Encoding.ASCII.GetBytes(baseString)));
-
-            return signature;
+            var hasher = new HMACSHA1(Encoding.ASCII.GetBytes(signingKey));
+            return Convert.ToBase64String(hasher.ComputeHash(Encoding.ASCII.GetBytes(baseString)));
         }
 
-        private string GenerateBaseString(string nonce, string timestamp, List<string> parameterlist)
+        private string GenerateBaseString(string nonce, string timestamp, IEnumerable<string> parameterlist)
         {
-            string basestring = "";
-            List<string> baseformat = new List<string>();
-            baseformat.Add("oauth_consumer_key=" + keys.ConsumerKey);
-            baseformat.Add("oauth_nonce=" + nonce);
-            baseformat.Add("oauth_signature_method=" + signatureMethod);
-            baseformat.Add("oauth_timestamp=" + timestamp);
-            baseformat.Add("oauth_token=" + keys.AccessToken);
-            baseformat.Add("oauth_version=" + version);
-
-            if (parameterlist != null)
+            var parameters = new List<string>(parameterlist)
             {
-                baseformat.AddRange(parameterlist);
-            }
-            baseformat.Sort();
+                "oauth_consumer_key=" + keys.ConsumerKey,
+                "oauth_nonce=" + nonce,
+                "oauth_signature_method=" + SignatureMethod,
+                "oauth_timestamp=" + timestamp,
+                "oauth_token=" + keys.AccessToken,
+                "oauth_version=" + Version
+            };
 
-            foreach (string value in baseformat)
-            {
-                basestring += value + "&";
-            }
-            basestring = basestring.TrimEnd('&');
+            parameters.Sort();
 
-            return basestring;
+            return string.Join('&', parameters);
         }
 
-        private string TwitterWebRequest(string resourceurl, string authheader, List<string> parameterlist)
+        private string TwitterWebRequest(string resourceurl, string authheader, IEnumerable<string> parameterlist)
         {
             ServicePointManager.Expect100Continue = false;
-            string postBody;
-
-            if (parameterlist != null)
-            {
-                postBody = GetPostBody(parameterlist);
-            }
-            else
-            {
-                postBody = "";
-            }
-
-            resourceurl += "?" + postBody;
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(resourceurl);
+            var parameters = string.Join('&', parameterlist);
+            var request = (HttpWebRequest)WebRequest.Create(string.Concat(resourceurl, "?", parameters));
             request.Headers.Add("Authorization", authheader);
             request.Method = "GET";
             request.ContentType = "application/x-www-form-urlencoded";
-            WebResponse response = request.GetResponse();
+            var response = request.GetResponse();
 
-            string responseData = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
-            //var json = JsonConvert.DeserializeObject<UserDto[]>(responseData);
-            //var json = JsonConvert.DeserializeObject<StatusDto[]>(responseData);
-            //var json = JsonConvert.DeserializeObject<UserTimelineStatusDto[]>(responseData);
-            //var json = JsonConvert.DeserializeObject<TweetDTO[]>(responseData);
-
-            return responseData;
-        }
-
-        private string GetPostBody(List<string> parameterlist)
-        {
-            string stringtoreturn = "";
-
-            foreach (string item in parameterlist)
-            {
-                stringtoreturn += item + "&";
-            }
-
-            stringtoreturn = stringtoreturn.TrimEnd('&');
-            return stringtoreturn;
+            return new StreamReader(response.GetResponseStream()).ReadToEnd();
         }
     }
 }
