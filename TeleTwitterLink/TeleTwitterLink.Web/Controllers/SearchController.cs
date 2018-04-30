@@ -37,7 +37,8 @@ namespace TeleTwitterLink.Web.Controllers
             }
 
             var searched = this.twitApiService.FindTwitterUserByName(model.SearchInput);
-            
+            this.twitApiService.GetTweetsOfUser("Dropbox");
+
             var returnedView = new SearchResultsViewModel() { SearchResults = searched };
 
             var userID = this.userManager.GetUserId(HttpContext.User);

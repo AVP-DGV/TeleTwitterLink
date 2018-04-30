@@ -94,3 +94,10 @@
 .panel-info {
     color: black !important;
 }
+
+.loader-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
