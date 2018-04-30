@@ -11,13 +11,13 @@ namespace TeleTwitterLink.Web.Controllers
     public class SearchController : Controller
     {
         private ITwitterApiService twitApiService;
-        private IUsersService userService;
+        private IUserService userService;
         private UserManager<User> userManager;
 
-        public SearchController(ITwitterApiService twitApiService, IUsersService usersService, UserManager<User> userManager)
+        public SearchController(ITwitterApiService twitApiService, IUserService userService, UserManager<User> userManager)
         {
             this.twitApiService = twitApiService;
-            this.userService = usersService;
+            this.userService = userService;
             this.userManager = userManager;
         }
 
@@ -37,13 +37,12 @@ namespace TeleTwitterLink.Web.Controllers
             }
 
             var searched = this.twitApiService.FindTwitterUserByName(model.SearchInput);
-            this.twitApiService.GetTweetsOfUser("Dropbox");
 
             var returnedView = new SearchResultsViewModel() { SearchResults = searched };
 
             var userID = this.userManager.GetUserId(HttpContext.User);
             returnedView.SearchResults = this.userService.FilterSearchReault(returnedView.SearchResults.ToList(), userID);
-
+            
             return PartialView("_SearchResultPartial", returnedView);
         }
     }

@@ -6,6 +6,8 @@ namespace TeleTwitterLink.Services.Data.Contracts
     {
         TwitterUserDTO[] FindTwitterUserByName(string name);
 
-        void GetTweetsOfUser(string screenName);
+        TweetDTO[] GetTweetsOfUser(string screenName);
+
+        TwitterUserDTO FindTwitterUserByTwitterId(string id);
     }
 }
