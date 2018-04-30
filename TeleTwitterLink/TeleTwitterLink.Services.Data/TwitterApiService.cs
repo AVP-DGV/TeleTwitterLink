@@ -22,5 +22,14 @@ namespace TeleTwitterLink.Services.Data
 
             return deserializedUsers;
         }
+
+        public void FindTweetsUserByName()
+        {
+            var search = "https://api.twitter.com/1.1/tweets.json?q=Dropbox";
+            var foundUsers = this.apiCall.GetData(search);
+            //var deserializedUsers = this.jsonDeserializer.DeserializeJson<TwitterUserDTO[]>(foundUsers);
+
+            //return deserializedTweets;
+        }
     }
 }

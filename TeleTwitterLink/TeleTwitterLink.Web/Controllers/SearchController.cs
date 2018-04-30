@@ -43,6 +43,8 @@ namespace TeleTwitterLink.Web.Controllers
             var userID = this.userManager.GetUserId(HttpContext.User);
             returnedView.SearchResults = this.userService.FilterSearchReault(returnedView.SearchResults.ToList(), userID);
 
+            //this.twitApiService.FindTweetsUserByName();
+
             return PartialView("_SearchResultPartial", returnedView);
         }
     }
