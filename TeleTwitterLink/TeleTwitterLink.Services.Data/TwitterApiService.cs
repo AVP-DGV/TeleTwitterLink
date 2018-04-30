@@ -22,14 +22,14 @@ namespace TeleTwitterLink.Services.Data
 
             return deserializedUsers;
         }
-<<<<<<< HEAD
+
         public void GetTweetsOfUser(string screenName)
         {
             var searchString = "https://api.twitter.com/1.1/statuses/user_timeline.json?from:screen_name=BarackObama+AND+from:screen_name=Dropbox";
             //screen_name=twitterapi&count=2
             //?q=from:user1+OR+from:user2
             var foundTweetsString = apiCall.GetData(searchString);
-=======
+        }
 
         public void FindTweetsUserByName()
         {
@@ -38,7 +38,6 @@ namespace TeleTwitterLink.Services.Data
             //var deserializedUsers = this.jsonDeserializer.DeserializeJson<TwitterUserDTO[]>(foundUsers);
 
             ////return deserializedTweets;
->>>>>>> d9d8e17d594fbd29710f48e77bd69821848a5a99
         }
     }
 }
