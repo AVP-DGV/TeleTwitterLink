@@ -3,7 +3,7 @@ using TeleTwitterLink.DTO;
 
 namespace TeleTwitterLink.Services.Data.Contracts
 {
-    public interface IUsersService
+    public interface IUserService
     {
         void AddUser(TwitterUserDTO dto, string aspUserId);
 

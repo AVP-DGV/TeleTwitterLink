@@ -8,13 +8,13 @@ namespace TeleTwitterLink.Web.Controllers
 {
     public class AddTwitterUserController : Controller
     {
-        private readonly IUsersService usersService;
+        private readonly IUserService userService;
         private UserManager<User> userManager;
 
-        public AddTwitterUserController(IUsersService usersService, UserManager<User> userManager)
+        public AddTwitterUserController(IUserService userService, UserManager<User> userManager)
         {
             this.userManager = userManager;
-            this.usersService = usersService;
+            this.userService = userService;
         }
 
         [HttpPost]
@@ -23,7 +23,7 @@ namespace TeleTwitterLink.Web.Controllers
         {
             var userID = this.userManager.GetUserId(HttpContext.User);
 
-            this.usersService.AddUser(user, userID);
+            this.userService.AddUser(user, userID);
 
             return Ok("VSICHKO tok:");
         }

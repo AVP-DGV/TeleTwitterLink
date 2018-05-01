@@ -8,10 +8,10 @@ namespace TeleTwitterLink.Web.Controllers
 {
     public class RemoveTwitterUserController : Controller
     {
-        private IUsersService userService;
+        private IUserService userService;
         private UserManager<User> userManager;
 
-        public RemoveTwitterUserController(IUsersService userService, UserManager<User> userManager)
+        public RemoveTwitterUserController(IUserService userService, UserManager<User> userManager)
         {
             this.userService = userService;
             this.userManager = userManager;

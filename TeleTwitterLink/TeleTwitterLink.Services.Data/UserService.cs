@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TeleTwitterLink.Data.Models;
 using TeleTwitterLink.DTO;
@@ -8,27 +9,27 @@ using TeleTwitterLInk.Data.Saver;
 
 namespace TeleTwitterLink.Services.Data
 {
-    public class UsersService : IUsersService
+    public class UserService : IUserService
     {
         private readonly ISaver saver;
         private readonly IRepository<TwitterUser> twitterUsers;
         private readonly IRepository<User> aspUsers;
         private readonly IRepository<UserTwitterUser> userTwitterUsers;
 
-        public UsersService(ISaver saver, IRepository<TwitterUser> twitterUsers, IRepository<User> aspUsers, IRepository<UserTwitterUser> usersTwitterUsers)
+        public UserService(ISaver saver, IRepository<TwitterUser> twitterUsers, IRepository<User> aspUsers, IRepository<UserTwitterUser> usersTwitterUsers)
         {
-            this.saver = saver;
-            this.twitterUsers = twitterUsers;
-            this.aspUsers = aspUsers;
-            this.userTwitterUsers = usersTwitterUsers;
+            this.saver = saver ?? throw new ArgumentNullException();
+            this.twitterUsers = twitterUsers ?? throw new ArgumentNullException();
+            this.aspUsers = aspUsers ?? throw new ArgumentNullException();
+            this.userTwitterUsers = usersTwitterUsers ?? throw new ArgumentNullException();
         }
 
         public void AddUser(TwitterUserDTO dto, string aspUserId)
         {
-           var addedUser = this.twitterUsers.All
-                .FirstOrDefault(x => x.TwitterUserId == dto.TwitterUserId);
+            var addedUser = this.twitterUsers.All
+                 .FirstOrDefault(x => x.TwitterUserId == dto.TwitterUserId);
 
-            if(addedUser != null)
+            if (addedUser != null)
             {
                 this.userTwitterUsers.AllAndDeleted
                     .FirstOrDefault(x => x.TwitterUserId == addedUser.Id)
@@ -93,8 +94,8 @@ namespace TeleTwitterLink.Services.Data
             var favouriteTwitterUserIds = this.TakeFavouriteTwitterUsers(aspUserId)
                 .Select(x => x.TwitterUserId)
                 .ToList();
-            
-            if(favouriteTwitterUserIds.Count != 0)
+
+            if (favouriteTwitterUserIds.Count != 0)
             {
                 for (int i = 0; i < searchResult.Count(); i++)
                 {
