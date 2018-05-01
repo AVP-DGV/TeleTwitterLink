@@ -15,13 +15,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleTwitterLink.Web", "Tele
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{68D7F8A2-E8F8-4FDB-89AC-FCA086382AC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleTwitterLink.DTO", "TeleTwitterLink.DTO\TeleTwitterLink.DTO.csproj", "{B4164751-422D-4960-938A-C5DF94DC1B7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleTwitterLink.DTO", "TeleTwitterLink.DTO\TeleTwitterLink.DTO.csproj", "{B4164751-422D-4960-938A-C5DF94DC1B7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleTwitterLink.Infrastructure", "TeleTwitterLink.Infrastructure\TeleTwitterLink.Infrastructure.csproj", "{D869B990-6562-4D16-874F-4F1CA4E24422}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleTwitterLink.Infrastructure", "TeleTwitterLink.Infrastructure\TeleTwitterLink.Infrastructure.csproj", "{D869B990-6562-4D16-874F-4F1CA4E24422}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleTwitterLink.Services.Data", "TeleTwitterLink.Services.Data\TeleTwitterLink.Services.Data.csproj", "{F27F9534-B327-4BCD-899B-4C7AD40FEF8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleTwitterLink.Services.Data", "TeleTwitterLink.Services.Data\TeleTwitterLink.Services.Data.csproj", "{F27F9534-B327-4BCD-899B-4C7AD40FEF8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleTwitterLink.Services.External", "TeleTwitterLink.Services.External\TeleTwitterLink.Services.External.csproj", "{F3A2EA96-99C6-4B97-AA9B-6CD56C408B3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleTwitterLink.Services.External", "TeleTwitterLink.Services.External\TeleTwitterLink.Services.External.csproj", "{F3A2EA96-99C6-4B97-AA9B-6CD56C408B3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{393ECB91-1F43-4AB6-ACAE-9C4DBF483B78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleTwitterLink.Tests", "TeleTwitterLink.Tests\TeleTwitterLink.Tests.csproj", "{4157171C-0AB1-489B-A5B3-75D245A9A666}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +61,10 @@ Global
 		{F3A2EA96-99C6-4B97-AA9B-6CD56C408B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3A2EA96-99C6-4B97-AA9B-6CD56C408B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3A2EA96-99C6-4B97-AA9B-6CD56C408B3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4157171C-0AB1-489B-A5B3-75D245A9A666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4157171C-0AB1-489B-A5B3-75D245A9A666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4157171C-0AB1-489B-A5B3-75D245A9A666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4157171C-0AB1-489B-A5B3-75D245A9A666}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +77,7 @@ Global
 		{D869B990-6562-4D16-874F-4F1CA4E24422} = {68D7F8A2-E8F8-4FDB-89AC-FCA086382AC3}
 		{F27F9534-B327-4BCD-899B-4C7AD40FEF8A} = {68D7F8A2-E8F8-4FDB-89AC-FCA086382AC3}
 		{F3A2EA96-99C6-4B97-AA9B-6CD56C408B3B} = {68D7F8A2-E8F8-4FDB-89AC-FCA086382AC3}
+		{4157171C-0AB1-489B-A5B3-75D245A9A666} = {393ECB91-1F43-4AB6-ACAE-9C4DBF483B78}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4A693B67-1662-4E6D-B3FD-3490034D2DC9}

@@ -8,12 +8,12 @@ namespace TeleTwitterLink.Web.Controllers
 {
     public class FavouriteTwitterUsersController : Controller
     {
-        private IUsersService userService;
+        private IUserService userService;
         private UserManager<User> userManager;
 
-        public FavouriteTwitterUsersController(IUsersService usersService, UserManager<User> userManager)
+        public FavouriteTwitterUsersController(IUserService userService, UserManager<User> userManager)
         {
-            this.userService = usersService;
+            this.userService = userService;
             this.userManager = userManager;
         }
 
