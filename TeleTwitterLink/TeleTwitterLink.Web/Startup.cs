@@ -73,7 +73,7 @@ namespace TeleTwitterLink.Web
         {
             services.Configure<TwitterKeys>(Configuration.GetSection("TwitterKeys"));
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<ITwitterApiService, TwitterApiService>();
             services.AddTransient<ITwitterApi, TwitterApi>();
             services.AddTransient<ITwitterKeys, TwitterKeys>();
