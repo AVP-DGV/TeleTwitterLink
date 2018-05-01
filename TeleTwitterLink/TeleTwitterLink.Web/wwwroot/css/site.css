@@ -101,3 +101,14 @@
     margin-right: auto;
     width: 30%;
 }
+
+.button-show-tweets {
+    background-color: #4880c4;
+    text-align: center;
+    height: 35px;
+    color: white;
+}
+
+.show-tweets {
+
+}

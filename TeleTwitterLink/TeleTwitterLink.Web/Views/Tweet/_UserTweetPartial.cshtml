@@ -1,0 +1,12 @@
+﻿@model TweetDTO[]
+@{
+    ViewData["Title"] = "_TweetPartial";
+}
+
+<h2>_TweetPartial</h2>
+
+@foreach(var tweet in Model)
+{
+    <h1>@tweet.TweetId</h1>
+}
+

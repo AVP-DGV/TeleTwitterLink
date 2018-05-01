@@ -25,8 +25,14 @@
                         <p class="additional-info"><img src="https://png.icons8.com/doodle/50/000000/follow.png"><strong>FollowersCount:</strong>@result.FollowersCount</p>
                         <p class="additional-info"><img src="https://png.icons8.com/color/50/000000/friends.png"><strong>FriendsCount: </strong> @result.FriendsCount</p>
                         <p class="additional-info"><img src="https://png.icons8.com/ultraviolet/50/000000/marker.png">@result.Location</p>
-                        <p class="additional-info"><img src="https://png.icons8.com/office/30/000000/resume.png">@result.Description></p>
+                        <p class="additional-info"><img src="https://png.icons8.com/office/30/000000/resume.png">@result.Description</p>
                     </div>
+                    <div class="button-show-tweets" role="button">
+                        <a asp-controller="Tweet" asp-action="UserTweets" asp-route-id="@result.TwitterUserId">
+                            <h3 class="show-tweets">Show Tweets</h3>
+                        </a>
+                    </div>
+                    <div class="tweets" hidden></div>
                 </div>
             </form>
         }

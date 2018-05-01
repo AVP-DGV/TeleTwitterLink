@@ -37,15 +37,12 @@ namespace TeleTwitterLink.Web.Controllers
             }
 
             var searched = this.twitApiService.FindTwitterUserByName(model.SearchInput);
-            this.twitApiService.GetTweetsOfUser("Dropbox");
 
             var returnedView = new SearchResultsViewModel() { SearchResults = searched };
 
             var userID = this.userManager.GetUserId(HttpContext.User);
             returnedView.SearchResults = this.userService.FilterSearchReault(returnedView.SearchResults.ToList(), userID);
-
-            //this.twitApiService.FindTweetsUserByName();
-
+            
             return PartialView("_SearchResultPartial", returnedView);
         }
     }
