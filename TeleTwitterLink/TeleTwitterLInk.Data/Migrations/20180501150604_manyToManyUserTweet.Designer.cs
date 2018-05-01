@@ -11,9 +11,10 @@ using TeleTwitterLInk.Data;
 namespace TeleTwitterLInk.Data.Migrations
 {
     [DbContext(typeof(TeleTwitterLinkDbContext))]
-    partial class TeleTwitterLinkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180501150604_manyToManyUserTweet")]
+    partial class manyToManyUserTweet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,8 +151,6 @@ namespace TeleTwitterLInk.Data.Migrations
                     b.Property<int>("TwitterUserId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TwitterUserId");
 
                     b.ToTable("Tweets");
                 });
@@ -325,14 +324,6 @@ namespace TeleTwitterLInk.Data.Migrations
                     b.HasOne("TeleTwitterLink.Data.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("TeleTwitterLink.Data.Models.Tweet", b =>
-                {
-                    b.HasOne("TeleTwitterLink.Data.Models.TwitterUser", "TwitterUser")
-                        .WithMany()
-                        .HasForeignKey("TwitterUserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

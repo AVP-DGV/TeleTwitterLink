@@ -12,10 +12,10 @@ namespace TeleTwitterLink.Web.Controllers
     public class TweetController : Controller
     {
         private ITwitterApiService twitterApiService;
-        private IUsersService userService;
+        private IUserService userService;
         private UserManager<User> userManager;
 
-        public TweetController(ITwitterApiService twitterApiService, IUsersService userService, UserManager<User> userManager)
+        public TweetController(ITwitterApiService twitterApiService, IUserService userService, UserManager<User> userManager)
         {
             this.twitterApiService = twitterApiService;
             this.userService = userService;
@@ -33,7 +33,7 @@ namespace TeleTwitterLink.Web.Controllers
         {
             var result = this.twitterApiService.GetTweetsOfUser(id);
 
-            return this.PartialView("_UserTweetPartial", result);
+            return this.View("UserTweets", result);
         }
     }
 }

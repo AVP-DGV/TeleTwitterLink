@@ -1,0 +1,15 @@
+﻿@model TweetDTO[]
+
+@{
+    ViewData["Title"] = "User Tweets";
+}
+
+<div id="tweets-list">
+    @foreach (var tweet in Model)
+    {
+        <div class="tweet">
+            <p class="tweet-date">@tweet.CreatedAt</p>
+            <p class="tweet-text">@tweet.Text</p>
+        </div>
+    }
+</div>
