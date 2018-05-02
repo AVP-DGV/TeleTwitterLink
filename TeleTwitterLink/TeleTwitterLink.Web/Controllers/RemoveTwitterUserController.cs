@@ -21,7 +21,9 @@ namespace TeleTwitterLink.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult RemoveUser(TwitterUserDTO twitterUser)
         {
-            this.userService.RemoveTwitterUser(twitterUser.TwitterUserId);
+            var aspUserId = this.userManager.GetUserId(HttpContext.User);
+
+            this.userService.RemoveTwitterUser(twitterUser.TwitterUserId, aspUserId);
 
             return Ok("");
         }

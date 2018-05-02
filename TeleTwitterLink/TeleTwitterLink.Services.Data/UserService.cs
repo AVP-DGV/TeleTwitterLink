@@ -27,7 +27,22 @@ namespace TeleTwitterLink.Services.Data
         public void AddUser(TwitterUserDTO dto, string aspUserId)
         {
             var existingUserInDb = this.twitterUsers.All
-                 .FirstOrDefault(x => x.TwitterUserId == dto.TwitterUserId);
+                  .FirstOrDefault(x => x.TwitterUserId == dto.TwitterUserId);
+
+            if (aspUserId == null)
+            {
+                throw new ArgumentNullException("UserId cannot be null!");
+            }
+
+            if (aspUserId == string.Empty)
+            {
+                throw new ArgumentException("UserId cannot be empty!");
+            }
+
+            if (dto == null)
+            {
+                throw new ArgumentNullException("TwitterUser cannot be null!");
+            }
 
             if (existingUserInDb != null)
             {
@@ -125,14 +140,17 @@ namespace TeleTwitterLink.Services.Data
             return searchResult;
         }
 
-        public void RemoveTwitterUser(string twitterUserId)
+        public void RemoveTwitterUser(string twitterUserId, string aspUserId)
         {
             var idInDB = this.twitterUsers.All
                   .First(x => x.TwitterUserId == twitterUserId).Id;
 
-            this.userTwitterUsers.All
-                .First(x => x.TwitterUserId == idInDB)
-                .IsDeleted = true;
+            var existingEntity = this.userTwitterUsers.All
+                .First(x => x.TwitterUserId == idInDB && x.UserId == aspUserId);
+
+            existingEntity.IsDeleted = true;
+
+            this.userTwitterUsers.Update(existingEntity);
 
             this.saver.SaveChanges();
         }
