@@ -23,11 +23,20 @@ namespace TeleTwitterLink.Services.Data
             return deserializedUsers;
         }
 
+        public TwitterUserDTO FindTwitterUserByTwitterId(string id)
+        {
+            var searchString = "https://api.twitter.com/1.1/users/show.json?user_id=" + id;
+            var foundResult = this.apiCall.GetData(searchString);
+            var desirializedTwitterUser = this.jsonDeserializer.DeserializeJson<TwitterUserDTO>(foundResult);
+
+            return desirializedTwitterUser;
+        }
+
         public TweetDTO[] GetTweetsOfUser(string twitterUserId)
         {
             var searchString = "https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=";
             var additionalParams = "&exclude_replies=true&include_rts=true";
-            var foundTweetsString = apiCall.GetData(searchString + twitterUserId + additionalParams);
+            var foundTweetsString = this.apiCall.GetData(searchString + twitterUserId + additionalParams);
             var desirializedTweets = this.jsonDeserializer.DeserializeJson<TweetDTO[]>(foundTweetsString);
 
             return desirializedTweets;

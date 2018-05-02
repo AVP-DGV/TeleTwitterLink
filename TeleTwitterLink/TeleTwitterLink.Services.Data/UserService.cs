@@ -27,6 +27,7 @@ namespace TeleTwitterLink.Services.Data
         public void AddUser(TwitterUserDTO dto, string aspUserId)
         {
             var existingUserInDb = this.twitterUsers.All
+                  .FirstOrDefault(x => x.TwitterUserId == dto.TwitterUserId);
 
             if (aspUserId == null)
             {
@@ -42,10 +43,7 @@ namespace TeleTwitterLink.Services.Data
             {
                 throw new ArgumentNullException("TwitterUser cannot be null!");
             }
-
-            var addedUser = this.twitterUsers.All
-                 .FirstOrDefault(x => x.TwitterUserId == dto.TwitterUserId);
-
+            
             if (existingUserInDb != null)
             {
                 bool isSaved = this.userTwitterUsers.AllAndDeleted
