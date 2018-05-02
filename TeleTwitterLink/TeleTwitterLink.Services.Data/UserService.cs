@@ -26,16 +26,32 @@ namespace TeleTwitterLink.Services.Data
 
         public void AddUser(TwitterUserDTO dto, string aspUserId)
         {
-            var addedUser = this.twitterUsers.All
+            var existingUserInDb = this.twitterUsers.All
                  .FirstOrDefault(x => x.TwitterUserId == dto.TwitterUserId);
 
-            if (addedUser != null)
+            if (existingUserInDb != null)
             {
-                this.userTwitterUsers.AllAndDeleted
-                    .FirstOrDefault(x => x.TwitterUserId == addedUser.Id)
-                    .IsDeleted = false;
+                bool isSaved = this.userTwitterUsers.AllAndDeleted
+                    .Any(x => x.TwitterUserId == existingUserInDb.Id && x.UserId == aspUserId);
 
-                this.saver.SaveChanges();
+                if (isSaved)
+                {
+                    var existingEntity = this.userTwitterUsers.AllAndDeleted
+                        .First(x => x.TwitterUserId == existingUserInDb.Id && x.UserId == aspUserId);
+
+                    existingEntity.IsDeleted = false;
+
+                    this.userTwitterUsers.Update(existingEntity);
+                }
+                else
+                {
+                    existingUserInDb.UserTwitterUsers = new List<UserTwitterUser>();
+
+                    existingUserInDb.UserTwitterUsers.Add(new UserTwitterUser()
+                    {
+                        UserId = aspUserId
+                    });
+                }
             }
             else
             {
@@ -60,9 +76,9 @@ namespace TeleTwitterLink.Services.Data
                 });
 
                 this.twitterUsers.Add(model);
-
-                this.saver.SaveChanges();
             }
+
+            this.saver.SaveChanges();
         }
 
         public IList<TwitterUserDTO> TakeFavouriteTwitterUsers(string aspUserId)
