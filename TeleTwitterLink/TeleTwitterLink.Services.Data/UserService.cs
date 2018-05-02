@@ -26,6 +26,21 @@ namespace TeleTwitterLink.Services.Data
 
         public void AddUser(TwitterUserDTO dto, string aspUserId)
         {
+            if (aspUserId == null)
+            {
+                throw new ArgumentNullException("UserId cannot be null!");
+            }
+
+            if (aspUserId == string.Empty)
+            {
+                throw new ArgumentException("UserId cannot be empty!");
+            }
+
+            if (dto == null)
+            {
+                throw new ArgumentNullException("TwitterUser cannot be null!");
+            }
+
             var addedUser = this.twitterUsers.All
                  .FirstOrDefault(x => x.TwitterUserId == dto.TwitterUserId);
 
