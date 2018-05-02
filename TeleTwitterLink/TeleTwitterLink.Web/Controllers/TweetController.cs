@@ -33,7 +33,7 @@ namespace TeleTwitterLink.Web.Controllers
         {
             var result = this.twitterApiService.GetTweetsOfUser(id);
 
-            return this.PartialView("_UserTweetPartial", result);
+            return this.View("UserTweets", result);
         }
     }
 }

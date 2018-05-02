@@ -112,3 +112,11 @@
 .show-tweets {
 
 }
+
+div#tweets-list {
+    padding-top: 10%;
+}
+
+.tweet { 
+    max-width: 70%;
+}
