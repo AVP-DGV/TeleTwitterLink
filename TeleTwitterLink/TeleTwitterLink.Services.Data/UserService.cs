@@ -38,6 +38,7 @@ namespace TeleTwitterLink.Services.Data
             {
                 throw new ArgumentException("UserId cannot be empty!");
             }
+<<<<<<< HEAD
 
             if (dto == null)
             {
@@ -54,6 +55,24 @@ namespace TeleTwitterLink.Services.Data
                     var existingEntity = this.userTwitterUsers.AllAndDeleted
                         .First(x => x.TwitterUserId == existingUserInDb.Id && x.UserId == aspUserId);
 
+=======
+
+            if (dto == null)
+            {
+                throw new ArgumentNullException("TwitterUser cannot be null!");
+            }
+
+            if (existingUserInDb != null)
+            {
+                bool isSaved = this.userTwitterUsers.AllAndDeleted
+                    .Any(x => x.TwitterUserId == existingUserInDb.Id && x.UserId == aspUserId);
+
+                if (isSaved)
+                {
+                    var existingEntity = this.userTwitterUsers.AllAndDeleted
+                        .First(x => x.TwitterUserId == existingUserInDb.Id && x.UserId == aspUserId);
+
+>>>>>>> e1b0c85ab7ddcd8159952c649b8bceef2f22b38c
                     existingEntity.IsDeleted = false;
 
                     this.userTwitterUsers.Update(existingEntity);
@@ -140,14 +159,17 @@ namespace TeleTwitterLink.Services.Data
             return searchResult;
         }
 
-        public void RemoveTwitterUser(string twitterUserId)
+        public void RemoveTwitterUser(string twitterUserId, string aspUserId)
         {
             var idInDB = this.twitterUsers.All
                   .First(x => x.TwitterUserId == twitterUserId).Id;
 
-            this.userTwitterUsers.All
-                .First(x => x.TwitterUserId == idInDB)
-                .IsDeleted = true;
+            var existingEntity = this.userTwitterUsers.All
+                .First(x => x.TwitterUserId == idInDB && x.UserId == aspUserId);
+
+            existingEntity.IsDeleted = true;
+
+            this.userTwitterUsers.Update(existingEntity);
 
             this.saver.SaveChanges();
         }

@@ -10,6 +10,7 @@ namespace TeleTwitterLink.Web.Controllers
     public class AddTwitterUserController : Controller
     {
         private readonly IUserService userService;
+<<<<<<< HEAD
         private ITwitterApiService twitterApiService;
         private UserManager<User> userManager;
 
@@ -17,6 +18,13 @@ namespace TeleTwitterLink.Web.Controllers
         {
             this.userManager = userManager;
             this.twitterApiService = twitterApiService;
+=======
+        private UserManager<User> userManager;
+
+        public AddTwitterUserController(IUserService userService, UserManager<User> userManager)
+        {
+            this.userManager = userManager;
+>>>>>>> e1b0c85ab7ddcd8159952c649b8bceef2f22b38c
             this.userService = userService;
         }
 

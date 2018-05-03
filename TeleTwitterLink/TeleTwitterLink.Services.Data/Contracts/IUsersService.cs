@@ -11,6 +11,6 @@ namespace TeleTwitterLink.Services.Data.Contracts
 
         IList<TwitterUserDTO> FilterSearchReault(IList<TwitterUserDTO> searchResult, string aspUserId);
 
-        void RemoveTwitterUser(string twitterUserId);
+        void RemoveTwitterUser(string twitterUserId, string aspUserId);
     }
 }
