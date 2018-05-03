@@ -1,10 +1,4 @@
 ﻿using Newtonsoft.Json;
-<<<<<<< HEAD
-using System;
-using System.Collections.Generic;
-using System.Text;
-=======
->>>>>>> e1b0c85ab7ddcd8159952c649b8bceef2f22b38c
 
 namespace TeleTwitterLink.DTO
 {

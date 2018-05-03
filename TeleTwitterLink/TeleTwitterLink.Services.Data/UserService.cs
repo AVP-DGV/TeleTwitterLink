@@ -38,24 +38,6 @@ namespace TeleTwitterLink.Services.Data
             {
                 throw new ArgumentException("UserId cannot be empty!");
             }
-<<<<<<< HEAD
-
-            if (dto == null)
-            {
-                throw new ArgumentNullException("TwitterUser cannot be null!");
-            }
-            
-            if (existingUserInDb != null)
-            {
-                bool isSaved = this.userTwitterUsers.AllAndDeleted
-                    .Any(x => x.TwitterUserId == existingUserInDb.Id && x.UserId == aspUserId);
-
-                if (isSaved)
-                {
-                    var existingEntity = this.userTwitterUsers.AllAndDeleted
-                        .First(x => x.TwitterUserId == existingUserInDb.Id && x.UserId == aspUserId);
-
-=======
 
             if (dto == null)
             {
@@ -72,7 +54,6 @@ namespace TeleTwitterLink.Services.Data
                     var existingEntity = this.userTwitterUsers.AllAndDeleted
                         .First(x => x.TwitterUserId == existingUserInDb.Id && x.UserId == aspUserId);
 
->>>>>>> e1b0c85ab7ddcd8159952c649b8bceef2f22b38c
                     existingEntity.IsDeleted = false;
 
                     this.userTwitterUsers.Update(existingEntity);
