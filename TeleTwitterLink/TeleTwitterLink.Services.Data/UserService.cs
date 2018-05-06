@@ -128,7 +128,7 @@ namespace TeleTwitterLink.Services.Data
 
             if (favouriteTwitterUserIds.Count != 0)
             {
-                for (int i = 0; i < searchResult.Count(); i++)
+                for (int i = 0; i < searchResult.Count; i++)
                 {
                     if (favouriteTwitterUserIds.Contains(searchResult[i].TwitterUserId))
                     {

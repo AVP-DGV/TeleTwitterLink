@@ -17,11 +17,17 @@ namespace TeleTwitterLink.Services.Data
         private IRepository<User> aspUsers;
         private IRepository<UserTweet> userTweet;
 
-        public TweetService(ISaver saver, IRepository<Tweet> tweets, IRepository<TwitterUser> twitterUsers)
+        public TweetService(ISaver saver,
+            IRepository<Tweet> tweets,
+            IRepository<TwitterUser> twitterUsers,
+            IRepository<User> aspUsers,
+            IRepository<UserTweet> userTweet)
         {
             this.saver = saver;
             this.tweets = tweets;
             this.twitterUsers = twitterUsers;
+            this.aspUsers = aspUsers;
+            this.userTweet = userTweet;
         }
 
         public void SaveTweet(TweetDTO dto, string aspUserId)
@@ -29,7 +35,7 @@ namespace TeleTwitterLink.Services.Data
             var existingTweetInDb = this.tweets.All
                 .FirstOrDefault(x => x.TweetId == dto.TweetId);
 
-            if (existingTweetInDb == null)
+            if (existingTweetInDb != null)
             {
                 bool isAlreadyBeenSaved = this.userTweet.AllAndDeleted
                     .Any(x => x.TweetId == existingTweetInDb.Id && x.UserId == aspUserId);
@@ -85,6 +91,25 @@ namespace TeleTwitterLink.Services.Data
             this.saver.SaveChanges();
         }
 
+        public IList<TweetDTO> FilterSavedTweets(IList<TweetDTO> tweets, string aspUserId)
+        {
+            var favouriteTweetsIds = this.TakeFavouriteTweetsOfUser(aspUserId)
+                .Select(x => x.TweetId)
+                .ToList();
+
+            if (favouriteTweetsIds.Count != 0)
+            {
+                for (int i = 0; i < tweets.Count; i++)
+                {
+                    if (favouriteTweetsIds.Contains(tweets[i].TweetId))
+                    {
+                        tweets[i].IsSaved = true;
+                    }
+                }
+            }
+
+            return tweets;
+        }
         public IList<TweetDTO> TakeFavouriteTweetsOfUser(string aspUserId)
         {
             var tweetIds = this.userTweet.All
@@ -108,7 +133,17 @@ namespace TeleTwitterLink.Services.Data
 
         public void RemoveTweet(string tweetId, string aspUserId)
         {
+            var idInDB = this.tweets.All
+                .First(x => x.TweetId == tweetId).Id;
 
+            var existingEntity = this.userTweet.All
+                .First(x => x.TweetId == idInDB && x.UserId == aspUserId);
+
+            existingEntity.IsDeleted = true;
+
+            this.userTweet.Update(existingEntity);
+
+            this.saver.SaveChanges();
         }
     }
 }

@@ -10,5 +10,7 @@ namespace TeleTwitterLink.Services.Data.Contracts
         IList<TweetDTO> TakeFavouriteTweetsOfUser(string aspUserId);
 
         void RemoveTweet(string tweetId, string aspUserId);
+
+        IList<TweetDTO> FilterSavedTweets(IList<TweetDTO> tweets, string aspUserId);
     }
 }

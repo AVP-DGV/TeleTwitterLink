@@ -12,13 +12,13 @@ namespace TeleTwitterLink.Web.Controllers
     public class TweetController : Controller
     {
         private ITwitterApiService twitterApiService;
-        private IUserService userService;
+        private ITweetService tweetService;
         private UserManager<User> userManager;
 
-        public TweetController(ITwitterApiService twitterApiService, IUserService userService, UserManager<User> userManager)
+        public TweetController(ITwitterApiService twitterApiService, ITweetService tweetService, UserManager<User> userManager)
         {
             this.twitterApiService = twitterApiService;
-            this.userService = userService;
+            this.tweetService = tweetService;
             this.userManager = userManager;
         }
 
@@ -33,7 +33,11 @@ namespace TeleTwitterLink.Web.Controllers
         {
             var result = this.twitterApiService.GetTweetsOfUser(id);
 
-            return this.View("UserTweets", result);
+            var aspUserId = this.userManager.GetUserId(HttpContext.User);
+
+            var filteredResult = this.tweetService.FilterSavedTweets(result, aspUserId);
+
+            return this.View("UserTweets", filteredResult);
         }
     }
 }

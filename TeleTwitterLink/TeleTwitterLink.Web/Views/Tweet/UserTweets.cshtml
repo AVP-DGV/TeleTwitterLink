@@ -1,4 +1,4 @@
-﻿@model TweetDTO[]
+﻿@model IList<TweetDTO>
 
 @{
     ViewData["Title"] = "User Tweets";
@@ -7,9 +7,33 @@
 <div id="tweets-list">
     @foreach (var tweet in Model)
     {
-        <div class="tweet">
-            <p class="tweet-date">@tweet.CreatedAt</p>
-            <p class="tweet-text">@tweet.Text</p>
-        </div>
+        @if (tweet.IsSaved == true)
+        {
+            <div class="tweet">
+                <div class="jumbotron">
+                    <h5 class="tweet-date">@tweet.CreatedAt</h5>
+                    <p class="tweet-text">@tweet.Text</p>
+                    <button class="button" disabled>Added</button>
+                </div>
+            </div>
+        }
+        else
+        {
+            <form asp-controller="AddTweet" asp-action="AddTweet" method="post">
+                <div class="tweet">
+                    <div class="jumbotron">
+                        <h5 class="tweet-date">@tweet.CreatedAt</h5>
+                        <p class="tweet-text">@tweet.Text</p>
+                        <input hidden name="tweetId" value="@tweet.TweetId" />
+                        <button class="button" id="@tweet.TweetId" type="submit">Add</button>
+                    </div>
+                </div>
+            </form>
+        }
+
     }
 </div>
+
+@section Scripts {
+    <script src="~/js/addTweet.js"></script>
+}

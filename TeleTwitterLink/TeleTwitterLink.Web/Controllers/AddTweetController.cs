@@ -1,33 +1,36 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using TeleTwitterLink.Data.Models;
 using TeleTwitterLink.DTO;
 using TeleTwitterLink.Services.Data.Contracts;
 
 namespace TeleTwitterLink.Web.Controllers
 {
-    public class AddTwitterUserController : Controller
+    public class AddTweetController : Controller
     {
-        private readonly IUserService userService;
+        private ITweetService tweetService;
         private ITwitterApiService twitterApiService;
         private UserManager<User> userManager;
 
-        public AddTwitterUserController(IUserService userService, ITwitterApiService twitterApiService, UserManager<User> userManager)
+        public AddTweetController(ITweetService tweetService, ITwitterApiService twitterApiService, UserManager<User> userManager)
         {
-            this.userService = userService;
-            this.userManager = userManager;
+            this.tweetService = tweetService;
             this.twitterApiService = twitterApiService;
+            this.userManager = userManager;
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddUser(TwitterUserDTO user)
+        public IActionResult AddTweet(TweetDTO tweet)
         {
-            user = this.twitterApiService.FindTwitterUserByTwitterId(user.TwitterUserId);
-
+            //make a request to the api for the tweet
             var aspUserId = this.userManager.GetUserId(HttpContext.User);
 
-            this.userService.AddUser(user, aspUserId);
+            this.tweetService.SaveTweet(tweet, aspUserId);
 
             return this.Ok();
         }
