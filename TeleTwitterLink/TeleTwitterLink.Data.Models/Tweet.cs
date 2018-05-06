@@ -13,6 +13,8 @@ namespace TeleTwitterLink.Data.Models
 
         public string Text { get; set; }
 
+        public string ScreenName { get; set; }
+
         public int TwitterUserId { get; set; }
         public TwitterUser TwitterUser { get; set; }
 

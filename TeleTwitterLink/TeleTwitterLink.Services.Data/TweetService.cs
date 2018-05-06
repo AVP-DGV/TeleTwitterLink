@@ -85,9 +85,25 @@ namespace TeleTwitterLink.Services.Data
             this.saver.SaveChanges();
         }
 
-        public void TakeFavouriteTweetsOfUser(string aspUserId)
+        public IList<TweetDTO> TakeFavouriteTweetsOfUser(string aspUserId)
         {
+            var tweetIds = this.userTweet.All
+                .Where(x => x.UserId == aspUserId)
+                .Select(x => x.TweetId)
+                .ToList();
 
+            var tweets = this.tweets.All
+                .Where(x => tweetIds.Contains(x.Id))
+                .Select(x => new TweetDTO()
+                {
+                    CreatedAt = x.CreatedAt,
+                    ScreenName = x.ScreenName,
+                    Text = x.Text,
+                    TweetId = x.TweetId
+                })
+                .ToList();
+
+            return tweets;
         }
 
         public void RemoveTweet(string tweetId, string aspUserId)
