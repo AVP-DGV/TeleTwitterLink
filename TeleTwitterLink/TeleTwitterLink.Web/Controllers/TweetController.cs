@@ -39,5 +39,15 @@ namespace TeleTwitterLink.Web.Controllers
 
             return this.View("UserTweets", filteredResult);
         }
+
+        [Authorize]
+        public IActionResult FavouriteTweets()
+        {
+            var aspUserId = this.userManager.GetUserId(HttpContext.User);
+
+            var favTweets = this.tweetService.TakeFavouriteTweetsOfUser(aspUserId);
+
+            return this.View(favTweets);
+        }
     }
 }

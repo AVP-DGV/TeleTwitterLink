@@ -1,0 +1,19 @@
+﻿@model IList<TweetDTO>
+@{
+    ViewData["Title"] = "FavouriteTweets";
+}
+
+<h2>FavouriteTweets</h2>
+@foreach (var tweet in Model)
+{
+    <form asp-controller="AddTweet" asp-action="AddTweet" method="post">
+        <div class="tweet">
+            <div class="jumbotron">
+                <h5 class="tweet-date">@tweet.CreatedAt</h5>
+                <p class="tweet-text">@tweet.Text</p>
+                <input hidden name="tweetId" value="@tweet.TweetId" />
+                <button class="button" id="@tweet.TweetId" type="submit">Remove</button>
+            </div>
+        </div>
+    </form>
+}

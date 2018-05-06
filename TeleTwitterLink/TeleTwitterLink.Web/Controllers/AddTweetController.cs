@@ -27,7 +27,8 @@ namespace TeleTwitterLink.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddTweet(TweetDTO tweet)
         {
-            //make a request to the api for the tweet
+            tweet = this.twitterApiService.GetTweetById(tweet.TweetId);
+
             var aspUserId = this.userManager.GetUserId(HttpContext.User);
 
             this.tweetService.SaveTweet(tweet, aspUserId);

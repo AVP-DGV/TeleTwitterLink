@@ -9,5 +9,7 @@ namespace TeleTwitterLink.Services.Data.Contracts
         TweetDTO[] GetTweetsOfUser(string screenName);
 
         TwitterUserDTO FindTwitterUserByTwitterId(string id);
+
+        TweetDTO GetTweetById(string tweetId);
     }
 }

@@ -73,6 +73,7 @@ namespace TeleTwitterLink.Services.Data
                 {
                     Text = dto.Text,
                     TweetId = dto.TweetId,
+                    CreatedAt = dto.CreatedAt,
                     TwitterUserId = twitterUserIdInDb.Id,
                     UserTweet = new List<UserTweet>()
                 };
@@ -110,6 +111,7 @@ namespace TeleTwitterLink.Services.Data
 
             return tweets;
         }
+
         public IList<TweetDTO> TakeFavouriteTweetsOfUser(string aspUserId)
         {
             var tweetIds = this.userTweet.All

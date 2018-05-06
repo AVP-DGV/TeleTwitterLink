@@ -41,5 +41,14 @@ namespace TeleTwitterLink.Services.Data
 
             return desirializedTweets;
         }
+
+        public TweetDTO GetTweetById(string tweetId)
+        {
+            var searchedString = "https://api.twitter.com/1.1/statuses/show.json?id=";
+            var foundTweetString = this.apiCall.GetData(searchedString + tweetId);
+            var desirelizedTweet = this.jsonDeserializer.DeserializeJson<TweetDTO>(foundTweetString);
+
+            return desirelizedTweet;
+        }
     }
 }
