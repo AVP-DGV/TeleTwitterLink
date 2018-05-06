@@ -12,5 +12,8 @@ namespace TeleTwitterLink.DTO
 
         [JsonProperty("text")]
         public string Text { get; set; }
+
+        [JsonProperty("screen_name")]
+        public string ScreenNameTwitterUser { get; set; }
     }
 }

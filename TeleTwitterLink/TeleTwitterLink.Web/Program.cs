@@ -10,7 +10,7 @@ namespace TeleTwitterLink.Web
             //var test = Get("https://api.twitter.com/1.1/users/search.json?q=georgidimitrov5");
             BuildWebHost(args).Run();
         }
-
+        //
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
