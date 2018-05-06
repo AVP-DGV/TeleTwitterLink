@@ -1,0 +1,18 @@
+﻿@model IList<UserDTO>
+@{
+    ViewData["Title"] = "ViewAllUsers";
+}
+
+<h2>ViewAllUsers</h2>
+
+<div id="list-of-users">
+    @foreach (var user in Model)
+    {
+        <div>
+            <p>@user.Email</p>
+            <a asp-controller="ManageUser" asp-action="FavouriteTwitterUsers" asp-route-id="@user.Id">
+                <h3>Show Favourite Twitter Users</h3>
+            </a>
+        </div>
+    }
+</div>

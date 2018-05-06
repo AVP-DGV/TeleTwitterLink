@@ -80,6 +80,7 @@ namespace TeleTwitterLink.Web
             services.AddTransient<ITwitterKeys, TwitterKeys>();
             services.AddTransient<IDeserializerOfJson, DeserializerOfJson>();
             services.AddTransient<ITweetService, TweetService>();
+            services.AddTransient<IUserManagerService, UserManagerService>();
         }
 
         private void RegisterInfrastructure(IServiceCollection services)
