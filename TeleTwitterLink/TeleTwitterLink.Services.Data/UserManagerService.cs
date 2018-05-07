@@ -16,8 +16,8 @@ namespace TeleTwitterLink.Services.Data
         private IRepository<UserTweet> userTweets;
         private IRepository<Tweet> tweets;
 
-        public UserManagerService(IRepository<User> users, 
-            IRepository<UserTwitterUser> userTwitterUsers, 
+        public UserManagerService(IRepository<User> users,
+            IRepository<UserTwitterUser> userTwitterUsers,
             IRepository<TwitterUser> twitterUsers, IRepository<UserTweet> userTweets,
             IRepository<Tweet> tweets)
         {
@@ -94,9 +94,12 @@ namespace TeleTwitterLink.Services.Data
                 .Select(x => new TweetDTO()
                 {
                     CreatedAt = x.CreatedAt,
-                    ScreenName = x.ScreenName,
                     Text = x.Text,
-                    TweetId = x.TweetId
+                    TweetId = x.TweetId,
+                    TwitterUser = new TwitterUserDTO()
+                    {
+                        Name = x.TwitterUser.Name
+                    }
                 })
                 .ToList();
 

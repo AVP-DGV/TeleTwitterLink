@@ -1,4 +1,5 @@
-﻿using TeleTwitterLink.DTO;
+﻿using Newtonsoft.Json.Linq;
+using TeleTwitterLink.DTO;
 using TeleTwitterLink.Services.Data.Contracts;
 
 namespace TeleTwitterLink.Services.Data
@@ -46,7 +47,10 @@ namespace TeleTwitterLink.Services.Data
         {
             var searchedString = "https://api.twitter.com/1.1/statuses/show.json?id=";
             var foundTweetString = this.apiCall.GetData(searchedString + tweetId);
+            JObject json = JObject.Parse(foundTweetString);
+            var twitterUserId = json["user"]["id_str"];
             var desirelizedTweet = this.jsonDeserializer.DeserializeJson<TweetDTO>(foundTweetString);
+            desirelizedTweet.TwitterUserId = twitterUserId.ToString();
 
             return desirelizedTweet;
         }

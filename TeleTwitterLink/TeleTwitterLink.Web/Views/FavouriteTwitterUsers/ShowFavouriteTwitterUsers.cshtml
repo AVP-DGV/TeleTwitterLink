@@ -4,8 +4,6 @@
     ViewData["Title"] = "ShowFavouriteTwitterUsers";
 }
 
-<h2>ShowFavouriteTwitterUsers</h2>
-
 @if (Model.Count != 0)
 {
     <div id="favourite-users">
@@ -14,7 +12,7 @@
             <form asp-controller="RemoveTwitterUser" asp-action="RemoveUser" method="post">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <div>
+                        <div class="clearfix">
                             <img class="profile-image" src="@result.ImgUrl" name="ImgUrl" />
                             <span class="name">@result.Name</span>
                             <input type="hidden" name="TwitterUserId" value="@result.TwitterUserId" />

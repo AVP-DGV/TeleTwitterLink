@@ -3,18 +3,22 @@
     ViewData["Title"] = "ViewAllUsers";
 }
 
-<h2>ViewAllUsers</h2>
-
 <div id="list-of-users">
     @foreach (var user in Model)
     {
         <div class="user">
-            <div class="card-body">
-                <h4 class="card-title">@user.Email</h4>
-                <p class="card-text">@user.CreatedOn</p>
+            <div>
+                <h4>@user.Email</h4>
+                <p>@user.CreatedOn</p>
                 <a asp-controller="ManageUser" asp-action="FavouriteTwitterUsers" asp-route-id="@user.Id" class="card-link">Saved Twitter Users</a>
                 <a asp-controller="ManageUser" asp-action="FavouriteTweets" asp-route-id="@user.Id" class="card-link">Saved Tweets</a>
+                <a class="credentials-link" asp-controller="ManageUser" asp-action="GiveAdminCredentials" asp-route-id="@user.Id" class="card-link">Give Admin Credentials</a>
             </div>
         </div>
+        <hr />
     }
 </div>
+
+@section Scripts {
+    <script src="~/js/give-credentials.js"></script>
+}

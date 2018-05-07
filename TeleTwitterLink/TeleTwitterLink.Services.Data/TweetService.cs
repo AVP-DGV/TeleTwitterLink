@@ -62,7 +62,7 @@ namespace TeleTwitterLink.Services.Data
             else
             {
                 var twitterUserIdInDb = this.twitterUsers.AllAndDeleted
-                    .FirstOrDefault(x => x.Name == dto.ScreenName);
+                    .FirstOrDefault(x => x.TwitterUserId == dto.TwitterUserId);
 
                 if (twitterUsers == null)
                 {
@@ -75,6 +75,7 @@ namespace TeleTwitterLink.Services.Data
                     TweetId = dto.TweetId,
                     CreatedAt = dto.CreatedAt,
                     TwitterUserId = twitterUserIdInDb.Id,
+                    TwitterUser = twitterUserIdInDb,
                     UserTweet = new List<UserTweet>()
                 };
 
@@ -124,9 +125,12 @@ namespace TeleTwitterLink.Services.Data
                 .Select(x => new TweetDTO()
                 {
                     CreatedAt = x.CreatedAt,
-                    ScreenName = x.ScreenName,
                     Text = x.Text,
-                    TweetId = x.TweetId
+                    TweetId = x.TweetId,
+                    TwitterUser = new TwitterUserDTO()
+                    {
+                        Name = x.TwitterUser.Name
+                    }
                 })
                 .ToList();
 

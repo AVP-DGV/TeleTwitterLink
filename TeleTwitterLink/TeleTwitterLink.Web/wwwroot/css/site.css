@@ -6,8 +6,7 @@
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 15px;
 }
 
 /* Carousel */
@@ -127,6 +126,7 @@
 }
 
 .show-tweets {
+    margin: 0;
 }
 
 div#tweets-list {
@@ -135,6 +135,10 @@ div#tweets-list {
 
 .tweet {
     max-width: 70%;
+}
+
+.tweet .jumbotron {
+    box-shadow: 5px 5px 10px gray;
 }
 
 a.show-tweets-link:link, a.show-tweets-link:visited {
@@ -148,8 +152,8 @@ a.show-tweets-link:link, a.show-tweets-link:visited {
 .button-show-tweets {
     background-color: #4880c4;
     text-align: center;
-    height: 35px;
     color: white;
+    padding: 10px;
 }
 
 .button-show-tweets:hover {
@@ -164,4 +168,17 @@ a.show-tweets-link:link, a.show-tweets-link:visited {
 
 a.card-link {
     padding: 5%;
+}
+
+.navbar-inverse {
+    background-color: #777;
+    border-color: #777;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: white;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover{
+    text-decoration: underline;
 }

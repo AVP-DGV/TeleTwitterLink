@@ -13,9 +13,17 @@ namespace TeleTwitterLink.DTO
         [JsonProperty("text")]
         public string Text { get; set; }
 
-        [JsonProperty(PropertyName = "screen_name")]
-        public string ScreenName { get; set; }
+        public string TwitterUserId { get; set; }
+
+        public TwitterUserDTO TwitterUser { get; set; }
 
         public bool IsSaved { get; set; }
+
+        public string GetFormattedTime()
+        {
+            var parts = this.CreatedAt.Split();
+
+            return $"{parts[1]} {parts[2]}, {parts[3]}";
+        }
     }
 }
