@@ -10,6 +10,8 @@ namespace TeleTwitterLink.Web.Models.ManageViewModels
     {
         public string Username { get; set; }
 
+        public string TestName { get; set; }
+
         public bool IsEmailConfirmed { get; set; }
 
         [Required]

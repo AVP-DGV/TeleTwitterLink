@@ -9,7 +9,7 @@ namespace TeleTwitterLink.Web.Models.AccountViewModels
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "TestName")]
+        [Display(Name = "User Name")]
         public string TestName { get; set; }
 
         [Required]
