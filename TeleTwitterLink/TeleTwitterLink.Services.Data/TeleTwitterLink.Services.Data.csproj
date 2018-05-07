@@ -10,9 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TeleTwitterLink.Data.Models\TeleTwitterLink.Data.Models.csproj" />
     <ProjectReference Include="..\TeleTwitterLInk.Data\TeleTwitterLInk.Data.csproj" />
     <ProjectReference Include="..\TeleTwitterLink.DTO\TeleTwitterLink.DTO.csproj" />
-    <ProjectReference Include="..\TeleTwitterLink.Infrastructure\TeleTwitterLink.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
