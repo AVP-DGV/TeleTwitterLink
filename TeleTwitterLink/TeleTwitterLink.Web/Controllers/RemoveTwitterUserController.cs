@@ -19,7 +19,6 @@ namespace TeleTwitterLink.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //no aspUserID ??
         public IActionResult RemoveUser(TwitterUserDTO twitterUser)
         {
             var aspUserId = this.userManager.GetUserId(HttpContext.User);

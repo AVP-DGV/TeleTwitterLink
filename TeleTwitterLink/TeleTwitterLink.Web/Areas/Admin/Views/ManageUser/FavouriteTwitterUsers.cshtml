@@ -1,0 +1,38 @@
+﻿@model IList<TwitterUserDTO>
+@{
+    ViewData["Title"] = "FavouriteTwitterUsers";
+}
+
+@if (Model.Count != 0)
+{
+    <div id="favourite-users">
+        @foreach (var result in Model)
+        {
+            <form asp-controller="RemoveTwitterUser" asp-action="RemoveUser" method="post">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div>
+                            <img class="profile-image" src="@result.ImgUrl" name="ImgUrl" />
+                            <span class="name">@result.Name</span>
+                            <input type="hidden" name="TwitterUserId" value="@result.TwitterUserId" />
+                            <button class="button-admin" id="@result.TwitterUserId" type="submit">Remove</button>
+                        </div>
+                        <div>
+                            <p>Saved on: @result.CretedOn</p>
+                            <p>Saved by: @result.User.Email</p>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
+}
+else
+{
+    <h1>No results</h1>
+}
+
+@section Scripts {
+    <script src="~/js/removeFavTwitterUser.js"></script>
+}

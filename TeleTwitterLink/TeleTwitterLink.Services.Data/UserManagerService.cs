@@ -11,10 +11,21 @@ namespace TeleTwitterLink.Services.Data
     public class UserManagerService : IUserManagerService
     {
         private IRepository<User> users;
+        private IRepository<UserTwitterUser> userTwitterUsers;
+        private IRepository<TwitterUser> twitterUsers;
+        private IRepository<UserTweet> userTweets;
+        private IRepository<Tweet> tweets;
 
-        public UserManagerService(IRepository<User> users)
+        public UserManagerService(IRepository<User> users, 
+            IRepository<UserTwitterUser> userTwitterUsers, 
+            IRepository<TwitterUser> twitterUsers, IRepository<UserTweet> userTweets,
+            IRepository<Tweet> tweets)
         {
             this.users = users;
+            this.userTwitterUsers = userTwitterUsers;
+            this.twitterUsers = twitterUsers;
+            this.userTweets = userTweets;
+            this.tweets = tweets;
         }
 
         public IList<UserDTO> GetAllUsers()
@@ -34,6 +45,62 @@ namespace TeleTwitterLink.Services.Data
                 .ToList();
 
             return users;
+        }
+
+        public IList<TwitterUserDTO> TakeFavouriteTwitterUsers(string aspUserId)
+        {
+            var twitterUsersIds = this.userTwitterUsers.All
+                .Where(x => x.UserId == aspUserId)
+                .Select(x => x.TwitterUserId)
+                .ToList();
+
+            var aspUser = this.users.All.First(x => x.Id == aspUserId);
+
+            var aspUserDTO = new UserDTO()
+            {
+                CreatedOn = aspUser.CreatedOn,
+                DeletedOn = aspUser.DeletedOn,
+                Email = aspUser.Email
+            };
+
+            var twitterUsers = this.twitterUsers.All
+                .Where(x => twitterUsersIds.Contains(x.Id))
+                .Select(x => new TwitterUserDTO()
+                {
+                    Description = x.Description,
+                    FollowersCount = x.FollowersCount,
+                    FriendsCount = x.FriendsCount,
+                    ImgUrl = x.ImgUrl,
+                    Location = x.Location,
+                    Name = x.Name,
+                    CretedOn = x.CreatedOn,
+                    TwitterUserId = x.TwitterUserId,
+                    User = aspUserDTO
+                })
+                .ToList();
+
+            return twitterUsers;
+        }
+
+        public IList<TweetDTO> TakeFavouriteTweetsOfUser(string aspUserId)
+        {
+            var tweetIds = this.userTweets.All
+                .Where(x => x.UserId == aspUserId)
+                .Select(x => x.TweetId)
+                .ToList();
+
+            var tweets = this.tweets.All
+                .Where(x => tweetIds.Contains(x.Id))
+                .Select(x => new TweetDTO()
+                {
+                    CreatedAt = x.CreatedAt,
+                    ScreenName = x.ScreenName,
+                    Text = x.Text,
+                    TweetId = x.TweetId
+                })
+                .ToList();
+
+            return tweets;
         }
     }
 }

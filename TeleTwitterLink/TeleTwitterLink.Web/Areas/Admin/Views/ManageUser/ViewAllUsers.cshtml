@@ -8,11 +8,13 @@
 <div id="list-of-users">
     @foreach (var user in Model)
     {
-        <div>
-            <p>@user.Email</p>
-            <a asp-controller="ManageUser" asp-action="FavouriteTwitterUsers" asp-route-id="@user.Id">
-                <h3>Show Favourite Twitter Users</h3>
-            </a>
+        <div class="user">
+            <div class="card-body">
+                <h4 class="card-title">@user.Email</h4>
+                <p class="card-text">@user.CreatedOn</p>
+                <a asp-controller="ManageUser" asp-action="FavouriteTwitterUsers" asp-route-id="@user.Id" class="card-link">Saved Twitter Users</a>
+                <a asp-controller="ManageUser" asp-action="FavouriteTweets" asp-route-id="@user.Id" class="card-link">Saved Tweets</a>
+            </div>
         </div>
     }
 </div>

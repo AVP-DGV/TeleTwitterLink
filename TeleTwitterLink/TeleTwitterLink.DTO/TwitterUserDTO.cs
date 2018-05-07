@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 
 namespace TeleTwitterLink.DTO
 {
@@ -7,7 +8,7 @@ namespace TeleTwitterLink.DTO
         [JsonProperty("id_str")]
         public string TwitterUserId { get; set; }
 
-        [JsonProperty("name")]
+        [JsonProperty("screen_name")]
         public string Name { get; set; }
 
         [JsonProperty("followers_count")]
@@ -24,6 +25,10 @@ namespace TeleTwitterLink.DTO
 
         [JsonProperty("description")]
         public string Description { get; set; }
+
+        public DateTime? CretedOn { get; set; }
+
+        public UserDTO User { get; set; }
 
         public bool IsSaved { get; set; }
     }

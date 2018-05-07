@@ -30,9 +30,16 @@ namespace TeleTwitterLink.Web.Areas.Admin.Controllers
 
         public IActionResult FavouriteTwitterUsers(string id)
         {
-            var favouriteTwitterUsers = this.userService.TakeFavouriteTwitterUsers(id);
+            var favouriteTwitterUsers = this.userManagerService.TakeFavouriteTwitterUsers(id);
 
-            return this.View("ShowFavouriteTwitterUsers", favouriteTwitterUsers);
+            return this.View(favouriteTwitterUsers);
+        }
+
+        public IActionResult FavouriteTweets(string id)
+        {
+            var favouriteTweets = this.userManagerService.TakeFavouriteTweetsOfUser(id);
+
+            return this.View(favouriteTweets);
         }
     }
 }
