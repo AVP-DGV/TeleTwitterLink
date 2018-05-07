@@ -34,7 +34,10 @@
                     <li><a asp-area="" asp-controller="Search" asp-action="Search">Search</a></li>
                     <li><a asp-area="" asp-controller="FavouriteTwitterUsers" asp-action="ShowFavouriteTwitterUsers">Favourite Users</a></li>
                     <li><a asp-area="" asp-controller="Tweet" asp-action="FavouriteTweets">Saved Tweets</a></li>
-                    <li><a asp-area="Admin" asp-controller="ManageUser" asp-action="ViewAllUsers">All Users</a></li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li><a asp-area="Admin" asp-controller="ManageUser" asp-action="ViewAllUsers">All Users</a></li>
+                    }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
