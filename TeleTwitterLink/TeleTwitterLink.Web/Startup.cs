@@ -86,6 +86,7 @@ namespace TeleTwitterLink.Web
         private void RegisterInfrastructure(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -116,7 +117,7 @@ namespace TeleTwitterLink.Web
             app.UseStaticFiles();
 
             app.UseAuthentication();
-            
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
