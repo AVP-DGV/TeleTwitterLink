@@ -16,16 +16,18 @@ namespace TeleTwitterLink.Services.Data
         private IRepository<UserTweet> userTweets;
         private IRepository<Tweet> tweets;
 
-        public UserManagerService(IRepository<User> users, 
-            IRepository<UserTwitterUser> userTwitterUsers, 
-            IRepository<TwitterUser> twitterUsers, IRepository<UserTweet> userTweets,
+        public UserManagerService(
+            IRepository<User> users,
+            IRepository<UserTwitterUser> userTwitterUsers,
+            IRepository<TwitterUser> twitterUsers,
+            IRepository<UserTweet> userTweets,
             IRepository<Tweet> tweets)
         {
-            this.users = users;
-            this.userTwitterUsers = userTwitterUsers;
-            this.twitterUsers = twitterUsers;
-            this.userTweets = userTweets;
-            this.tweets = tweets;
+            this.users = users ?? throw new ArgumentNullException(); ;
+            this.userTwitterUsers = userTwitterUsers ?? throw new ArgumentNullException(); ;
+            this.twitterUsers = twitterUsers ?? throw new ArgumentNullException(); ;
+            this.userTweets = userTweets ?? throw new ArgumentNullException(); ;
+            this.tweets = tweets ?? throw new ArgumentNullException(); ;
         }
 
         public IList<UserDTO> GetAllUsers()
