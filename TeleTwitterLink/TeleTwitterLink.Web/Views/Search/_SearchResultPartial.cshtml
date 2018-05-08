@@ -6,41 +6,37 @@
 
 @if (@Model.SearchResults.Count() != 0)
 {
-    @*foreach (var result in Model.SearchResults)
-        {
-            <div class="col-sm-4 col-xs-8">
-                <div class="panel panel-default text-center">
-                    <div class="panel-heading">
-                        <h1>@result.Name</h1>
-                    </div>
-                    <div class="panel-body">
-                        <p><strong>FollowersCount: </strong>@result.FollowersCount</p>
-                        <p><strong>FriendsCount: </strong> @result.FriendsCount</p>
-                        <img src="@result.ImgUrl" />
-                    </div>
-                </div>
-            </div>*@
-
     <div id="search-results">
         <ul>
             @foreach (var result in Model.SearchResults)
             {
-                <li>
-                    <div class="profile">
-                        <img class="profile-image" src="@result.ImgUrl" />
-                        <span class="name">@result.Name</span>
-
-                        <div class="additional-info" id="additional-info">
-                            <p class="followers-count"><strong>FollowersCount: </strong>@result.FollowersCount</p>
-                            <p class="friend-count"><strong>FriendsCount: </strong> @result.FriendsCount</p>
-                            <p class="location">@result.Location</p>
-                            <p class="description" @result.Description></p>
+                @if (result.IsSaved == false)
+                {
+                    <li class="list-group-item">
+                        <form asp-controller="AddTwitterUser" asp-action="AddUser" method="post">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <img class="profile-image" src="@result.ImgUrl" name="ImgUrl" />
+                                    <span class="name">@result.Name</span>
+                                    <input type="hidden" name="TwitterUserId" value="@result.TwitterUserId" />
+                                    <button class="button" id="@result.TwitterUserId" type="submit">Add</button>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                }
+                else
+                {
+                    <li class="list-group-item">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <img class="profile-image" src="@result.ImgUrl" name="ImgUrl" />
+                                <span class="name">@result.Name</span>
+                                <button class="button" disabled>Added</button>
+                            </div>
                         </div>
-                        
-                        <button class="button" type="button" name="Show more info">Show more</button>
-                        <button class="add-fav-user" id="@result.TweeterUserId" type="button">Add</button>
-                    </div>
-                </li>
+                    </li>
+                }
             }
         </ul>
     </div>

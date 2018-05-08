@@ -1,0 +1,39 @@
+﻿@model IList<TweetDTO>
+@{
+    ViewData["Title"] = "FavouriteTweets";
+}
+
+@if (Model.Count == 0)
+{
+    <h1>No results</h1>
+}
+<div id="list-favourite-tweets">
+    @foreach (var tweet in Model)
+    {
+        <form asp-controller="RemoveTweet" asp-action="RemoveTweet" method="post">
+            <div class="tweet">
+                <div class="jumbotron clearfix">
+                    <div class="clearfix">
+                        <h5 class="tweet-date pull-left">
+                            <span class="glyphicon glyphicon-time"></span>
+                            @tweet.GetFormattedTime()
+                        </h5>
+                        <h5 class="tweet-owner pull-right">
+                            <span class="glyphicon glyphicon-user"></span> 
+                            <strong>@tweet.TwitterUser.Name</strong>
+                        </h5>
+                    </div>
+                    <hr />
+                    <p class="tweet-text">@tweet.Text</p>
+                    <input hidden name="tweetId" value="@tweet.TweetId" />
+                    <hr />
+                    <button class="button" id="@tweet.TweetId" type="submit">Remove</button>
+                </div>
+            </div>
+        </form>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/js/removeTweet.js"></script>
+}

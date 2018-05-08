@@ -128,6 +128,68 @@ namespace TeleTwitterLInk.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("TeleTwitterLink.Data.Models.Tweet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CreatedAt");
+
+                    b.Property<DateTime?>("CreatedOn");
+
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("ModifiedOn");
+
+                    b.Property<string>("ScreenName");
+
+                    b.Property<string>("Text");
+
+                    b.Property<string>("TweetId");
+
+                    b.Property<int>("TwitterUserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TwitterUserId");
+
+                    b.ToTable("Tweets");
+                });
+
+            modelBuilder.Entity("TeleTwitterLink.Data.Models.TwitterUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("CreatedOn");
+
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("FollowersCount");
+
+                    b.Property<int>("FriendsCount");
+
+                    b.Property<string>("ImgUrl");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Location");
+
+                    b.Property<DateTime?>("ModifiedOn");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("TwitterUserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TwitterUsers");
+                });
+
             modelBuilder.Entity("TeleTwitterLink.Data.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -169,6 +231,8 @@ namespace TeleTwitterLInk.Data.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<string>("TestName");
+
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
@@ -185,6 +249,40 @@ namespace TeleTwitterLInk.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("TeleTwitterLink.Data.Models.UserTweet", b =>
+                {
+                    b.Property<int>("TweetId");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.HasKey("TweetId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserTweet");
+                });
+
+            modelBuilder.Entity("TeleTwitterLink.Data.Models.UserTwitterUser", b =>
+                {
+                    b.Property<int>("TwitterUserId");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.HasKey("TwitterUserId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserTwitterUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -228,6 +326,40 @@ namespace TeleTwitterLInk.Data.Migrations
                 {
                     b.HasOne("TeleTwitterLink.Data.Models.User")
                         .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TeleTwitterLink.Data.Models.Tweet", b =>
+                {
+                    b.HasOne("TeleTwitterLink.Data.Models.TwitterUser", "TwitterUser")
+                        .WithMany()
+                        .HasForeignKey("TwitterUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TeleTwitterLink.Data.Models.UserTweet", b =>
+                {
+                    b.HasOne("TeleTwitterLink.Data.Models.Tweet", "Tweet")
+                        .WithMany("UserTweet")
+                        .HasForeignKey("TweetId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TeleTwitterLink.Data.Models.User", "User")
+                        .WithMany("UserTweet")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TeleTwitterLink.Data.Models.UserTwitterUser", b =>
+                {
+                    b.HasOne("TeleTwitterLink.Data.Models.TwitterUser", "TwitterUser")
+                        .WithMany("UserTwitterUsers")
+                        .HasForeignKey("TwitterUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TeleTwitterLink.Data.Models.User", "User")
+                        .WithMany("UserTwitterUsers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

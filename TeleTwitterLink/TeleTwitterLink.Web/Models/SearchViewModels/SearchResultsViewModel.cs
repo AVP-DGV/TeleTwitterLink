@@ -5,6 +5,6 @@ namespace TeleTwitterLink.Web.Models.SearchViewModels
 {
     public class SearchResultsViewModel
     {
-        public IEnumerable<TweeterUserDTO> SearchResults { get; set; }
+        public IEnumerable<TwitterUserDTO> SearchResults { get; set; }
     }
 }

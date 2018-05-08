@@ -4,6 +4,12 @@ namespace TeleTwitterLink.Services.Data.Contracts
 {
     public interface ITwitterApiService
     {
-        TweeterUserDTO[] FindTwitterUserByName(string name);
+        TwitterUserDTO[] FindTwitterUserByName(string name);
+
+        TweetDTO[] GetTweetsOfUser(string screenName);
+
+        TwitterUserDTO FindTwitterUserByTwitterId(string id);
+
+        TweetDTO GetTweetById(string tweetId);
     }
 }

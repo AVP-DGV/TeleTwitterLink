@@ -14,7 +14,13 @@ namespace TeleTwitterLInk.Data
         {
         }
 
-        //public DbSet<Tweet> Tweets { get; set; }
+        public DbSet<TwitterUser> TwitterUsers { get; set; }
+
+        public DbSet<UserTwitterUser> UserTwitterUsers { get; set; }
+
+        public DbSet<Tweet> Tweets { get; set; }
+
+        public DbSet<UserTweet> UserTweet { get; set; }
 
         public override int SaveChanges()
         {
@@ -24,10 +30,31 @@ namespace TeleTwitterLInk.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder.Entity<User>()
-            //    .HasMany(x => x.Tweets)
-            //    .WithOne(x => x.Author)
-            //    .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<UserTwitterUser>()
+                .HasKey(k => new { k.TwitterUserId, k.UserId });
+
+            builder.Entity<UserTwitterUser>()
+                .HasOne<User>(u => u.User)
+                .WithMany(t => t.UserTwitterUsers)
+                .HasForeignKey(k => k.UserId);
+
+            builder.Entity<UserTwitterUser>()
+                .HasOne<TwitterUser>(t => t.TwitterUser)
+                .WithMany(u => u.UserTwitterUsers)
+                .HasForeignKey(k => k.TwitterUserId);
+
+            builder.Entity<UserTweet>()
+                .HasKey(k => new { k.TweetId, k.UserId });
+
+            builder.Entity<UserTweet>()
+                .HasOne<User>(u => u.User)
+                .WithMany(t => t.UserTweet)
+                .HasForeignKey(k => k.UserId);
+
+            builder.Entity<UserTweet>()
+                .HasOne<Tweet>(t => t.Tweet)
+                .WithMany(u => u.UserTweet)
+                .HasForeignKey(k => k.TweetId);
 
             base.OnModelCreating(builder);
         }

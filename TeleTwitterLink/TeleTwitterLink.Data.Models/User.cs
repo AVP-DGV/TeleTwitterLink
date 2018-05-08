@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using TeleTwitterLink.Data.Models.Abstract;
@@ -7,7 +8,7 @@ namespace TeleTwitterLink.Data.Models
 {
     public class User : IdentityUser, IDeletable, IAuditable
     {
-        public override string UserName { get; set; }
+        public string TestName { get; set; }
 
         public bool IsDeleted { get; set; }
 
@@ -19,5 +20,9 @@ namespace TeleTwitterLink.Data.Models
 
         [DataType(DataType.DateTime)]
         public DateTime? ModifiedOn { get; set; }
+
+        public ICollection<UserTwitterUser> UserTwitterUsers { get; set; }
+
+        public ICollection<UserTweet> UserTweet { get; set; }
     }
 }
